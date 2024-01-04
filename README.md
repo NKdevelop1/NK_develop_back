@@ -6,6 +6,7 @@
 - API 명세서
   - [다음 링크](https://www.notion.so/00d0bf199c184008a23bd0795b3637dc?v=08a86e2587a6418fb1a48c641bdb8865&pvs=4)에서 확인이 가능함.
   - 계속해서 추가 기능 소요에 대한 파악 후 정의를 이어가고자 한다.
+  - 계정에 대한 세부 정보 컬럼을 반영하였다.
 
 - 데이터베이스 ERD
   - 아래와 같은 관계도로 데이터베이스 시스템을 구성하고자 한다.
@@ -14,10 +15,11 @@
     ![23 12 9 NK에듀 데이터베이스](https://github.com/NKdevelop1/NK_develop_back/assets/55177359/bd3d1ca7-1c9b-4cc5-95b2-02faa4a54bf0)
 
 - 개발 환경
-  - Java 1.8
-  - Java Spring Boot 2.7.14
-  - Lombok
-  - MySQL
+  - Java 17
+  - Java Spring Boot 3.2.1
+  - Lombok 1.18.24
+  - MySQL 5.7.44
+    - MySQL Workbench 실행 → root 계정 로그인 → Create a new schema named `nkedu` using `utf8`
   - JPA
 
 - 패키지 구조
