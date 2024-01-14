@@ -1,6 +1,10 @@
 package com.nkedu.back.model;
 
 import java.sql.Timestamp;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import java.sql.Date;
 
 import jakarta.persistence.Column;
@@ -19,14 +23,15 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Getter
 @Entity
-@Table(name="teacher")
+@JsonInclude(Include.NON_NULL)
+@Table(name="parent")
 public class Parent {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
 	@Column(name="id")
 	private Long id;
 	
-	@Column(name="userId")
+	@Column(name="userId", unique=true)
 	private String userId;
 	
 	@Column(name="userPw")
