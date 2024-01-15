@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @Getter
 @Entity
-@Table(name="teacher")
+@Table(name="parent")
 public class Parent {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment

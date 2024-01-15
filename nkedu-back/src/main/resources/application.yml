@@ -6,8 +6,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/nkedu?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
-    username: root
-    password: root
+    username: nkback
+    password: password
 
   jpa:
     database: mysql
@@ -28,3 +28,5 @@ logging:
           descriptor:
             sql: trace
     
+jwt:
+  secret: "qrpoiwerjfsldkfnfsjlkaajskdlfjsldfjiewualjlsjf" #나중에 변경하고 github에 올릴 땐 삭제
