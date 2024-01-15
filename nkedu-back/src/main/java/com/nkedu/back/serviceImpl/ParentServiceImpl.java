@@ -1,5 +1,7 @@
 package com.nkedu.back.serviceImpl;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.util.ObjectUtils;
 
 import com.nkedu.back.api.ParentService;
 import com.nkedu.back.model.Parent;
+import com.nkedu.back.model.ParentDto;
 import com.nkedu.back.repository.ParentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,44 +24,112 @@ public class ParentServiceImpl implements ParentService {
 	private final ParentRepository parentRepository;
 
 	@Override
-	public Parent createParent(Parent parent) {
-		Parent savedParent = parentRepository.save(parent);
-		return savedParent;
-	}
-
-	@Override
-	public void deleteParent(Long id) {
-		parentRepository.deleteById(id);
-	}
-
-	@Override
-	public Parent updateParent(Parent parent) {
-		Parent updatedParent = null;
-		
+	public boolean createParent(ParentDto parentDto) {
 		try {
-			Parent searchedParent = getParent(parent.getId());
+			Parent parent = new Parent();
+			parent.setUserId(parentDto.getUserId());
+			parent.setUserPw(parentDto.getUserPw());
+			parent.setName(parentDto.getName());
+			parent.setBirth(parentDto.getBirth());
+			parent.setPhoneNumber(parentDto.getPhoneNumber());
+			parent.setCreated(new Timestamp(System.currentTimeMillis()));;
 			
-			if(!ObjectUtils.isEmpty(searchedParent)) {
-				updatedParent = parentRepository.save(parent);
-			}
+			parentRepository.save(parent);
 			
-			return updatedParent;
-			
+			return true;
 		} catch (Exception e) {
-			log.info("[Failed] e: " + e.toString()); 
+			log.info("[Failed] e : " + e.getMessage());
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteParentById(Long id) {
+		try {
+			parentRepository.deleteById(id);
+			
+			return true;
+		} catch (Exception e) {
+			log.info("[Failed] e : " + e.getMessage());
+		}
+		return false;
+	}
+
+	@Override
+	public boolean updateParent(Long id, ParentDto parentDto) {
+		try {
+			Parent searchedParent = parentRepository.findById(id).get();
+			
+			if(ObjectUtils.isEmpty(searchedParent))
+				return false;
+			
+			if(!ObjectUtils.isEmpty(parentDto.getUserId()))
+				searchedParent.setUserId(parentDto.getUserId());
+			if(!ObjectUtils.isEmpty(parentDto.getUserPw()))
+				searchedParent.setUserPw(parentDto.getUserPw());
+			if(!ObjectUtils.isEmpty(parentDto.getName()))
+				searchedParent.setName(parentDto.getName());
+			if(!ObjectUtils.isEmpty(parentDto.getPhoneNumber()))
+				searchedParent.setPhoneNumber(parentDto.getPhoneNumber());	
+			if(!ObjectUtils.isEmpty(parentDto.getBirth()))
+				searchedParent.setBirth(parentDto.getBirth());
+			
+			parentRepository.save(searchedParent);
+			
+			return true;
+		} catch (Exception e) {
+			log.info("[Failed] e : " + e.getMessage());
 		}
 		
+		return false;
+	}
+
+	@Override
+	public List<ParentDto> getParents() {
+		try {
+			List<ParentDto> parentDtos = new ArrayList<>();
+			
+			List<Parent> parents = parentRepository.findAll();
+			
+			for(Parent parent : parents) {
+				ParentDto parentDto = new ParentDto();
+				parentDto.setId(parent.getId());
+				parentDto.setUserId(parent.getUserId());
+				parentDto.setName(parent.getName());
+				parentDto.setPhoneNumber(parent.getPhoneNumber());
+				parentDto.setBirth(parent.getBirth());
+				
+				parentDtos.add(parentDto);
+			}
+			
+			return parentDtos;
+		} catch(Exception e) {
+			log.info("[Failed] e : " + e.getMessage());
+		}
+
 		return null;
 	}
 
 	@Override
-	public List<Parent> getParents() {
-		return parentRepository.findAll();
-	}
+	public ParentDto getParentById(Long id) {
+		
+		try {
+			Parent parent = parentRepository.findById(id).get();
+			
+			ParentDto parentDto = new ParentDto();
+			parentDto.setId(parent.getId());
+			parentDto.setUserId(parent.getUserId());
+			parentDto.setName(parent.getName());
+			parentDto.setPhoneNumber(parent.getPhoneNumber());
+			parentDto.setBirth(parent.getBirth());
+			
+			return parentDto;
+			
+		} catch (Exception e) {
+			log.info("[Failed] e : " + e.getMessage());
+		}
 
-	@Override
-	public Parent getParent(Long id) {
-		return parentRepository.findById(id).get();
+		return null;
 	}
 
 }
