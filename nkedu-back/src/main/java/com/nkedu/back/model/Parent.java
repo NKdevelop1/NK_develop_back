@@ -59,14 +59,5 @@ public class Parent {
 	
 	@Column(name="phoneNumber", nullable=false)
 	private String phoneNumber;
-	
-	/*
-	@ManyToMany
-	@JoinTable(
-			name="parentAuthority",
-			joinColumns = {@JoinColumn(name="id", referencedColumnName="id")},
-			inverseJoinColumns = {@JoinColumn(name="authorityName", referencedColumnName="authorityName")})
-	private Set<ParentAuthority> parentAuthorities;
-	*/
 
 }
