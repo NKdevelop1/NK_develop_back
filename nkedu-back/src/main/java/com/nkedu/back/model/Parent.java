@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.sql.Date;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,38 +27,10 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@Table(name="parent")
 @Setter
 @Getter
-@SuperBuilder
-@AllArgsConstructor
-@NoArgsConstructor
+@DiscriminatorValue("Parent")
 @JsonInclude(Include.NON_NULL)
-public class Parent {
-	//@JsonIgnore
-	@Id // primary key
-	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
-	private Long id;
+public class Parent extends User {
 	
-	@Column(name="userId", length=50, nullable=false, unique=true) // unique
-	private String userId;
-
-	@JsonIgnore
-	@Column(name="userPw", length=100, nullable=false)
-	private String userPw;
-	
-	@Column(name="name", length=50, nullable=false)
-	private String name;
-	
-	@JsonIgnore
-	@Column(name="created", nullable=false)
-	private Timestamp created;
-	
-	@Column(name="birth", nullable=false)
-	private Date birth;
-	
-	@Column(name="phoneNumber", nullable=false)
-	private String phoneNumber;
-
 }
