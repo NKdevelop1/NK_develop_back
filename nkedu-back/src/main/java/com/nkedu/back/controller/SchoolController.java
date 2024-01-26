@@ -25,7 +25,7 @@ public class SchoolController {
 
 	private final SchoolService schoolService;
 	
-	// 등록된 모든 학교 리스트 조회 
+	// 전체 학교 리스트 조회 
 	@GetMapping("/school")
 	public ResponseEntity<List<SchoolDTO>>getAllSchools() {
 		List<SchoolDTO> schoolDTOs = schoolService.getAllSchools();
@@ -38,7 +38,7 @@ public class SchoolController {
 		}
 	}
 	
-	// 학교 추가 - body에 ~고등학교
+	// 학교 생성 - body에 ~고등학교
 	@PostMapping("/school")
 	public ResponseEntity<Void> createSchool (@RequestBody SchoolDTO schoolDTO){
 		return schoolService.createSchool(schoolDTO) ?
@@ -54,7 +54,7 @@ public class SchoolController {
 			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	// 학교  계정 설정 
+	// 학교 계정 정 
 	@PutMapping("/school/{schoolId}")
 	public ResponseEntity<Void> updateSchool (@PathVariable Long schoolId, @RequestBody SchoolDTO schoolDto){
 		return schoolService.updateSchool(schoolId,schoolDto) ?

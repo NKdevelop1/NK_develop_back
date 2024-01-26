@@ -36,9 +36,9 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	
     // 등록된 학교 삭제 
-    public boolean deleteSchoolById(Long id) {
+    public boolean deleteSchoolById(Long schoolId) {
     	try{
-    		schoolRepository.deleteById(id);
+    		schoolRepository.deleteById(schoolId);
     		
     		return true;
     	} catch (Exception e) {
@@ -48,9 +48,9 @@ public class SchoolServiceImpl implements SchoolService{
     }
     
     // 등록된 학교 수정 
-	public boolean updateSchool(Long id, SchoolDTO schoolDTO) {
+	public boolean updateSchool(Long schoolId, SchoolDTO schoolDTO) {
 		try {
-			School searchedSchool = schoolRepository.findById(id).get();
+			School searchedSchool = schoolRepository.findById(schoolId).get();
 			
 			if(ObjectUtils.isEmpty(searchedSchool))
 				return false;

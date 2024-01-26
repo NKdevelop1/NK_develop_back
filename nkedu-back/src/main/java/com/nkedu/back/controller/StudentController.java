@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,7 +44,7 @@ public class StudentController  {
 	
 	// 학생 계정 생성 - body에 값 넣어서 Post
 	@PostMapping("/student")
-	public ResponseEntity<Void> createStudent (@RequestBody StudentDTO studentDTO){
+	public ResponseEntity<Void> createStudent (@Validated @RequestBody StudentDTO studentDTO){
 		return studentService.createStudent(studentDTO) ?
 			       new ResponseEntity<>(null, HttpStatus.OK) :
 			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);	
@@ -53,6 +54,15 @@ public class StudentController  {
 	@DeleteMapping("/student/{studentId}")
 	public ResponseEntity<Void> deleteStudent(@PathVariable Long studentId){
 		return studentService.deleteStudentById(studentId) ?
+			       new ResponseEntity<>(null, HttpStatus.OK) :
+			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	
+	// 학생 계정 설정 
+	@PutMapping("/student/{studentId}")
+	public ResponseEntity<Void> updateSchool (@PathVariable Long studentId, @RequestBody StudentDTO studentDTO){
+		return studentService.updateStudent(studentId,studentDTO) ?
 			       new ResponseEntity<>(null, HttpStatus.OK) :
 			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -68,14 +78,6 @@ public class StudentController  {
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
-	
-	// 학생 계정 설정 
-	@PutMapping("/student/{studentId}")
-	public ResponseEntity<Void> updateSchool (@PathVariable Long studentId, @RequestBody StudentDTO studentDTO){
-		return studentService.updateStudent(studentId,studentDTO) ?
-			       new ResponseEntity<>(null, HttpStatus.OK) :
-			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 

@@ -27,7 +27,7 @@ public class StudentDTO {
 	
 	private String phoneNumber;
 	
-	private String school;
+	private School school;
 	
-	private String grade;
+	private Long grade;
 }

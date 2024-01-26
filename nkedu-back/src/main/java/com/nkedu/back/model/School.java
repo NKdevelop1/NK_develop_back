@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class School {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
-	@Column(name="id")
+	@Column(name="schoolId")
 	private Long id;
 	
     // @Pattern(regexp = ".*고등학교$",message = "***고등학교 형태의 입력 가능합니다.") 

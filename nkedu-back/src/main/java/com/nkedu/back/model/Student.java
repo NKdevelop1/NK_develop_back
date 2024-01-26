@@ -2,6 +2,7 @@ package com.nkedu.back.model;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,6 +15,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 public class Student {
 	@Id // primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
-	@Column(name="id")
+	@Column(name="studentId")
 	private Long id;
 	
 	@Column(name="userId",length=50,nullable=false,unique = true)
@@ -49,14 +52,16 @@ public class Student {
 	@Column(name="created",nullable=false)
 	private Timestamp created;
 	
+    @JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(name="birth",nullable=false)
 	private Date birth;
 	
 	@Column(name="phoneNumber",nullable=false)
 	private String phoneNumber;
 	
-	@Column(name="school")
-	private String school;
+	@ManyToOne
+	@JoinColumn(name = "schoolId")
+	private School school;
 	
 	@Column(name="grade")
 	private Long grade;
