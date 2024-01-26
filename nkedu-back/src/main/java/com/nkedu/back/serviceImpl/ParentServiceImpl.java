@@ -27,9 +27,9 @@ public class ParentServiceImpl implements ParentService {
 	public boolean createParent(ParentDto parentDto) {
 		try {
 			Parent parent = new Parent();
-			parent.setUserId(parentDto.getUserId());
-			parent.setUserPw(parentDto.getUserPw());
-			parent.setName(parentDto.getName());
+			parent.setUsername(parentDto.getUsername());
+			parent.setPassword(parentDto.getPassword());
+			parent.setNickname(parentDto.getNickname());
 			parent.setBirth(parentDto.getBirth());
 			parent.setPhoneNumber(parentDto.getPhoneNumber());
 			parent.setCreated(new Timestamp(System.currentTimeMillis()));;
@@ -63,12 +63,12 @@ public class ParentServiceImpl implements ParentService {
 			if(ObjectUtils.isEmpty(searchedParent))
 				return false;
 			
-			if(!ObjectUtils.isEmpty(parentDto.getUserId()))
-				searchedParent.setUserId(parentDto.getUserId());
-			if(!ObjectUtils.isEmpty(parentDto.getUserPw()))
-				searchedParent.setUserPw(parentDto.getUserPw());
-			if(!ObjectUtils.isEmpty(parentDto.getName()))
-				searchedParent.setName(parentDto.getName());
+			if(!ObjectUtils.isEmpty(parentDto.getUsername()))
+				searchedParent.setUsername(parentDto.getUsername());
+			if(!ObjectUtils.isEmpty(parentDto.getPassword()))
+				searchedParent.setPassword(parentDto.getPassword());
+			if(!ObjectUtils.isEmpty(parentDto.getNickname()))
+				searchedParent.setNickname(parentDto.getNickname());
 			if(!ObjectUtils.isEmpty(parentDto.getPhoneNumber()))
 				searchedParent.setPhoneNumber(parentDto.getPhoneNumber());	
 			if(!ObjectUtils.isEmpty(parentDto.getBirth()))
@@ -94,8 +94,8 @@ public class ParentServiceImpl implements ParentService {
 			for(Parent parent : parents) {
 				ParentDto parentDto = new ParentDto();
 				parentDto.setId(parent.getId());
-				parentDto.setUserId(parent.getUserId());
-				parentDto.setName(parent.getName());
+				parentDto.setUsername(parent.getUsername());
+				parentDto.setNickname(parent.getNickname());
 				parentDto.setPhoneNumber(parent.getPhoneNumber());
 				parentDto.setBirth(parent.getBirth());
 				
@@ -118,8 +118,8 @@ public class ParentServiceImpl implements ParentService {
 			
 			ParentDto parentDto = new ParentDto();
 			parentDto.setId(parent.getId());
-			parentDto.setUserId(parent.getUserId());
-			parentDto.setName(parent.getName());
+			parentDto.setUsername(parent.getUsername());
+			parentDto.setNickname(parent.getNickname());
 			parentDto.setPhoneNumber(parent.getPhoneNumber());
 			parentDto.setBirth(parent.getBirth());
 			

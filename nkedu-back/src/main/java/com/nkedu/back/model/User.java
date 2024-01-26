@@ -2,6 +2,7 @@ package com.nkedu.back.model;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -16,6 +17,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,15 +44,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
 	private Long id;
 	
-	@Column(name="userId", length=50, nullable=false, unique=true) // unique
-	private String userId;
+	@Column(name="username", length=50, nullable=false, unique=true) // unique
+	private String username;
 
 	@JsonIgnore
-	@Column(name="userPw", length=100, nullable=false)
-	private String userPw;
+	@Column(name="password", length=100, nullable=false)
+	private String password;
 	
-	@Column(name="name", length=50, nullable=false)
-	private String name;
+	@Column(name="nickname", length=50, nullable=false)
+	private String nickname;
 	
 	@JsonIgnore
 	@Column(name="created", nullable=false)
@@ -57,7 +61,13 @@ public class User {
 	@Column(name="birth", nullable=false)
 	private Date birth;
 	
-	@Column(name="phoneNumber", nullable=false)
+	@Column(name="phone_number", nullable=false)
 	private String phoneNumber;
 	
+	@ManyToMany
+	@JoinTable(
+			name="user_authority",
+			joinColumns={@JoinColumn(name="id", referencedColumnName="id")},
+			inverseJoinColumns={@JoinColumn(name="authority_name", referencedColumnName="authority_name")})
+	private Set<Authority> authorities;
 }

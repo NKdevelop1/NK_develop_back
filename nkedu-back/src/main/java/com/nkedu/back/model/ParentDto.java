@@ -19,12 +19,12 @@ public class ParentDto {
 	
 	private Long id;
 	
-	private String userId;
+	private String username;
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // 쓰기 전용
-	private String userPw;
+	private String password;
 	
-	private String name;
+	private String nickname;
 	
 	private Date birth;
 	

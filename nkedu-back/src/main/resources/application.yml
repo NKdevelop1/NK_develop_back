@@ -28,3 +28,7 @@ logging:
           descriptor:
             sql: trace
     
+jwt:
+  header: Authorization
+  secret: oyIDVJvNIvVvEXSwaaFjm0mnkAUpWQg7pwsTxPAJoCpctNEctTnU6yeYVgw8RqMAXlHpu51GemvW
+  token-validity-in-seconds: 86400 # 약 60일
