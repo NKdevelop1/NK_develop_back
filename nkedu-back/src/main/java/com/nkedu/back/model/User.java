@@ -64,6 +64,10 @@ public class User {
 	@Column(name="phone_number", nullable=false)
 	private String phoneNumber;
 	
+    @JsonIgnore
+    @Column(name = "activated")
+    private boolean activated;
+    
 	@ManyToMany
 	@JoinTable(
 			name="user_authority",

@@ -2,6 +2,8 @@ package com.nkedu.back.model;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,11 +19,12 @@ public class StudentDTO {
 	
 	private Long id;
 	
-	private String userId;
+	private String username;
 	
-	private String userPw;
-	
-	private String name;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String password;
+
+	private String nickname;
 	
 	private Date birth;
 	

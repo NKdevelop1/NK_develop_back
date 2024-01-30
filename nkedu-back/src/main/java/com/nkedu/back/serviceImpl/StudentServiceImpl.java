@@ -39,11 +39,11 @@ public class StudentServiceImpl implements StudentService  {
 				StudentDTO studentDTO = new StudentDTO();
 				
 				studentDTO.setId(student.getId());
-				studentDTO.setUserId(student.getUserId());
-				studentDTO.setUserPw(student.getUserPw());
-				studentDTO.setName(student.getName());
+				studentDTO.setUsername(student.getUsername());
+				studentDTO.setNickname(student.getNickname());
 				studentDTO.setBirth(student.getBirth());
 				studentDTO.setPhoneNumber(student.getPhoneNumber());
+				
 				studentDTO.setSchool(student.getSchool());
 				studentDTO.setGrade(student.getGrade());
 				
@@ -85,16 +85,17 @@ public class StudentServiceImpl implements StudentService  {
 			}
 
 
-			
 			//2. 학생 생성 
 			Student student = new Student();
 			
-			student.setName(studentDTO.getName());
-			student.setUserId(studentDTO.getUserId());
-			student.setUserPw(studentDTO.getUserPw());
+			student.setUsername(studentDTO.getUsername());
+			student.setPassword(studentDTO.getPassword());
+			student.setNickname(studentDTO.getNickname());
 			student.setCreated(new Timestamp(System.currentTimeMillis()));
 			student.setPhoneNumber(studentDTO.getPhoneNumber());
 			student.setBirth(studentDTO.getBirth());
+
+
 			student.setSchool(postedSchool); //or searchedSchool?
 			student.setGrade(studentDTO.getGrade());
 			
@@ -122,6 +123,8 @@ public class StudentServiceImpl implements StudentService  {
     }
     
     // 학생 계정 수정
+	// 학교 수정 API는 따로 만들어야 할 듯 (ex. 관리자)
+	// grade 도 매년 자동으로 올릴지.. 어떻게 해야할지 고민
 	public boolean updateStudent(Long studentId, StudentDTO studentDTO) {
 		try {
 			Student searchedStudent = studentRepository.findById(studentId).get();
@@ -130,8 +133,19 @@ public class StudentServiceImpl implements StudentService  {
 				return false;
 			
 			// 요청 받은 학생 이름으로 업데이트 
-			if(!ObjectUtils.isEmpty(studentDTO.getName()))
-				searchedStudent.setName(studentDTO.getName());
+			if(!ObjectUtils.isEmpty(studentDTO.getUsername()))
+				searchedStudent.setUsername(studentDTO.getUsername());
+			if(!ObjectUtils.isEmpty(studentDTO.getPassword()))
+				searchedStudent.setPassword(studentDTO.getPassword());
+			if(!ObjectUtils.isEmpty(studentDTO.getNickname()))
+				searchedStudent.setNickname(studentDTO.getNickname());
+			if(!ObjectUtils.isEmpty(studentDTO.getPhoneNumber()))
+				searchedStudent.setPhoneNumber(studentDTO.getPhoneNumber());	
+			if(!ObjectUtils.isEmpty(studentDTO.getBirth()))
+				searchedStudent.setBirth(studentDTO.getBirth());
+
+			if(!ObjectUtils.isEmpty(studentDTO.getGrade()))
+				searchedStudent.setGrade(studentDTO.getGrade());
 			
 			studentRepository.save(searchedStudent);
 			return true;
@@ -152,11 +166,11 @@ public class StudentServiceImpl implements StudentService  {
 			StudentDTO studentDTO = new StudentDTO();
 			
 			studentDTO.setId(student.getId());
-			studentDTO.setUserId(student.getUserId());
-			//studentDTO.setUserPw(student.getUserPw());
-			studentDTO.setName(student.getName());
-			studentDTO.setBirth(student.getBirth());
+			studentDTO.setUsername(student.getUsername());
+			studentDTO.setNickname(student.getNickname());
 			studentDTO.setPhoneNumber(student.getPhoneNumber());
+			studentDTO.setBirth(student.getBirth());
+
 			studentDTO.setSchool(student.getSchool());
 			studentDTO.setGrade(student.getGrade());
 
