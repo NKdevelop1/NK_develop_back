@@ -31,17 +31,17 @@ public class UserServiceImpl implements UserService{
         try{
 
 	        if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
-	            throw new RuntimeException("ì´ë¯¸ ê°€ì…ë˜ì–´ ìˆëŠ” ìœ ì €ì…ë‹ˆë‹¤.");
+	            throw new RuntimeException("ÀÌ¹Ì °¡ÀÔµÇ¾î ÀÖ´Â À¯ÀúÀÔ´Ï´Ù.");
 	        }
 	
 	        System.out.println(userDto.getUsername());
-	        // ê°€ì…ë˜ì–´ ìˆì§€ ì•Šì€ íšŒì›ì´ë©´,
-	        // ê¶Œí•œ ì •ë³´ ë§Œë“¤ê³ 
+	        // °¡ÀÔµÇ¾î ÀÖÁö ¾ÊÀº È¸¿øÀÌ¸é,
+	        // ±ÇÇÑ Á¤º¸ ¸¸µé°í
 	        Authority authority = Authority.builder()
 	                .authorityName("ROLE_USER")
 	                .build();
 	
-	        // ìœ ì € ì •ë³´ë¥¼ ë§Œë“¤ì–´ì„œ save
+	        // À¯Àú Á¤º¸¸¦ ¸¸µé¾î¼­ save
 	        User user = User.builder()
 	                .username(userDto.getUsername())
 	                .password(passwordEncoder.encode(userDto.getPassword()))
@@ -59,13 +59,13 @@ public class UserServiceImpl implements UserService{
     
     }
 
-    // ìœ ì €,ê¶Œí•œ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” ë©”ì†Œë“œ
+    // À¯Àú,±ÇÇÑ Á¤º¸¸¦ °¡Á®¿À´Â ¸Ş¼Òµå
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities(String username) {
         return userRepository.findOneWithAuthoritiesByUsername(username);
     }
 
-    // í˜„ì¬ securityContextì— ì €ì¥ëœ usernameì˜ ì •ë³´ë§Œ ê°€ì ¸ì˜¤ëŠ” ë©”ì†Œë“œ
+    // ÇöÀç securityContext¿¡ ÀúÀåµÈ usernameÀÇ Á¤º¸¸¸ °¡Á®¿À´Â ¸Ş¼Òµå
     @Transactional(readOnly = true)
     public Optional<User> getMyUserWithAuthorities() {
         return SecurityUtil.getCurrentUsername()

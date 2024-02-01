@@ -22,7 +22,7 @@ public class SchoolServiceImpl implements SchoolService{
 	
 	private final SchoolRepository schoolRepository;
 	
-	// í•™êµ ìƒì„± 
+	// ÇĞ±³ »ı¼º 
 	public boolean createSchool(SchoolDTO schoolDTO) {
 		try {
 			School school = new School();
@@ -35,7 +35,7 @@ public class SchoolServiceImpl implements SchoolService{
 		return false;
 	}
 	
-    // ë“±ë¡ëœ í•™êµ ì‚­ì œ 
+    // µî·ÏµÈ ÇĞ±³ »èÁ¦ 
     public boolean deleteSchoolById(Long schoolId) {
     	try{
     		schoolRepository.deleteById(schoolId);
@@ -47,7 +47,7 @@ public class SchoolServiceImpl implements SchoolService{
     	return false;
     }
     
-    // ë“±ë¡ëœ í•™êµ ìˆ˜ì • 
+    // µî·ÏµÈ ÇĞ±³ ¼öÁ¤ 
 	public boolean updateSchool(Long schoolId, SchoolDTO schoolDTO) {
 		try {
 			School searchedSchool = schoolRepository.findById(schoolId).get();
@@ -55,7 +55,7 @@ public class SchoolServiceImpl implements SchoolService{
 			if(ObjectUtils.isEmpty(searchedSchool))
 				return false;
 			
-			// ìš”ì²­ ë°›ì€ í•™êµ ì´ë¦„ìœ¼ë¡œ ì—…ë°ì´íŠ¸ 
+			// ¿äÃ» ¹ŞÀº ÇĞ±³ ÀÌ¸§À¸·Î ¾÷µ¥ÀÌÆ® 
 			if(!ObjectUtils.isEmpty(schoolDTO.getSchoolName()))
 				searchedSchool.setSchoolName(schoolDTO.getSchoolName());
 			
@@ -68,7 +68,7 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 	
 	
-    // ë“±ë¡ëœ ëª¨ë“  í•™êµ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
+    // µî·ÏµÈ ¸ğµç ÇĞ±³ ¸®½ºÆ® Á¶È¸
     public List<SchoolDTO> getAllSchools() {
     	try {
     		List<SchoolDTO> schoolDTOs = new ArrayList<>();

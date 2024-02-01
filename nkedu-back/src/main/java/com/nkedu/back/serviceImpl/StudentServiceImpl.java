@@ -27,10 +27,10 @@ public class StudentServiceImpl implements StudentService  {
 	private final StudentRepository studentRepository;
 	private final SchoolRepository schoolRepository;
 	
-    // ëª¨ë“  í•™ìƒ  ê³„ì • ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
+    // ¸ğµç ÇĞ»ı  °èÁ¤ ¸®½ºÆ® Á¶È¸
     public List<StudentDTO> getAllStudents() {
     	try {
-    		// ì—…ë°ì´íŠ¸ëœ studentDTO ë‹´ì„ ë°°
+    		// ¾÷µ¥ÀÌÆ®µÈ studentDTO ´ãÀ» ¹è
     		List<StudentDTO> studentDTOs = new ArrayList<>();
     		
 			List<Student> students = studentRepository.findAll();
@@ -56,36 +56,36 @@ public class StudentServiceImpl implements StudentService  {
 		return null;    
 	}
     
-	// í•™ìƒ ê³„ì • ìƒì„± 
+	// ÇĞ»ı °èÁ¤ »ı¼º 
 	public boolean createStudent(StudentDTO studentDTO) {		
 		try {
-			//1. ìš”ì²­ì˜¨ í•™êµê°€ ê¸°ì¡´ í•™êµ DBì— ì¡´ì¬í•˜ëŠ”ì§€ ì—¬ë¶€ íŒë‹¨í•˜ëŠ” Logic
+			//1. ¿äÃ»¿Â ÇĞ±³°¡ ±âÁ¸ ÇĞ±³ DB¿¡ Á¸ÀçÇÏ´ÂÁö ¿©ºÎ ÆÇ´ÜÇÏ´Â Logic
 			
-			// ìš”ì²­ë°›ì€ School ê°ì²´
+			// ¿äÃ»¹ŞÀº School °´Ã¼
 			School postedSchool = studentDTO.getSchool();
 			
-			// ìš”ì²­ë°›ì€ School ê°ì²´ê°€ ë¶ˆì¶©ë¶„í•  ê²½ìš° 
+			// ¿äÃ»¹ŞÀº School °´Ã¼°¡ ºÒÃæºĞÇÒ °æ¿ì 
 			if(postedSchool == null || postedSchool.getId() == null || postedSchool.getSchoolName()==null) {
-				throw new IllegalArgumentException("ìš”ì²­í•˜ì‹  í•™êµì˜ ì •ë³´ê°€ ì¶©ë¶„í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+				throw new IllegalArgumentException("¿äÃ»ÇÏ½Å ÇĞ±³ÀÇ Á¤º¸°¡ ÃæºĞÇÏÁö ¾Ê½À´Ï´Ù.");
 			}
 			
-			// ìš”ì²­ë°›ì€ School ê°ì²´ê°€ ê¸°ì¡´ schoolRepoì— ì¡´ì¬í•œë‹¤ë©´, searchedSchool ì œëŒ€ë¡œ í• ë‹¹ 
-			// ì—†ë‹¤ë©´, existingSchool = nullë¡œ í• ë‹¹ 
+			// ¿äÃ»¹ŞÀº School °´Ã¼°¡ ±âÁ¸ schoolRepo¿¡ Á¸ÀçÇÑ´Ù¸é, searchedSchool Á¦´ë·Î ÇÒ´ç 
+			// ¾ø´Ù¸é, existingSchool = null·Î ÇÒ´ç 
 			School searchedSchool = schoolRepository.findById(postedSchool.getId()).orElse(null);
 			
-			// 1-1. í•´ë‹¹ idì˜ schoolì´ ì¡´ì¬í•˜ì§€ ì•Šì„ ë•Œ 			
+			// 1-1. ÇØ´ç idÀÇ schoolÀÌ Á¸ÀçÇÏÁö ¾ÊÀ» ¶§ 			
 			// if (searchedSchool == null) {
-			//	throw new NullPointerException("ìš”ì²­í•˜ì‹  " + postedSchool.getSchoolName() +"ì€ ì˜ëª»ëœ ìš”ì²­ì…ë‹ˆë‹¤.");
+			//	throw new NullPointerException("¿äÃ»ÇÏ½Å " + postedSchool.getSchoolName() +"Àº Àß¸øµÈ ¿äÃ»ÀÔ´Ï´Ù.");
 			//}
-			// 1ì˜ ê²½ìš° ìë™ìœ¼ë¡œ null ê°’ì´ë©´  nullpointerë¡œ ì•Œì•„ì„œ ì²˜ë¦¬
+			// 1ÀÇ °æ¿ì ÀÚµ¿À¸·Î null °ªÀÌ¸é  nullpointer·Î ¾Ë¾Æ¼­ Ã³¸®
 			
-			// 2-1. idê°€ ì¡´ì¬í•´ë„, (í•´ë‹¹ idì˜ í•™êµ ì´ë¦„ != ìš”ì²­ëœ í•™êµì˜ ì´ë¦„) ì¼ ê²½ìš° 
+			// 2-1. id°¡ Á¸ÀçÇØµµ, (ÇØ´ç idÀÇ ÇĞ±³ ÀÌ¸§ != ¿äÃ»µÈ ÇĞ±³ÀÇ ÀÌ¸§) ÀÏ °æ¿ì 
 			if(!searchedSchool.getSchoolName().equals(postedSchool.getSchoolName())) {
-				throw new IllegalArgumentException("ìš”ì²­í•˜ì‹  idì— í•´ë‹¹í•˜ëŠ” í•™êµì™€ ìš”ì²­í•œ " + postedSchool.getSchoolName() +"ì´ ë‹¤ë¥¸ í•™êµì…ë‹ˆë‹¤.");
+				throw new IllegalArgumentException("¿äÃ»ÇÏ½Å id¿¡ ÇØ´çÇÏ´Â ÇĞ±³¿Í ¿äÃ»ÇÑ " + postedSchool.getSchoolName() +"ÀÌ ´Ù¸¥ ÇĞ±³ÀÔ´Ï´Ù.");
 			}
 
 
-			//2. í•™ìƒ ìƒì„± 
+			//2. ÇĞ»ı »ı¼º 
 			Student student = new Student();
 			
 			student.setUsername(studentDTO.getUsername());
@@ -111,7 +111,7 @@ public class StudentServiceImpl implements StudentService  {
 		return false;
 	}
 	
-    // í•™ìƒ ê³„ì • ì‚­ì œ
+    // ÇĞ»ı °èÁ¤ »èÁ¦
     public boolean deleteStudentById(Long studentId) {
         try{
         	studentRepository.deleteById(studentId);
@@ -122,9 +122,9 @@ public class StudentServiceImpl implements StudentService  {
         return false;
     }
     
-    // í•™ìƒ ê³„ì • ìˆ˜ì •
-	// í•™êµ ìˆ˜ì • APIëŠ” ë”°ë¡œ ë§Œë“¤ì–´ì•¼ í•  ë“¯ (ex. ê´€ë¦¬ì)
-	// grade ë„ ë§¤ë…„ ìë™ìœ¼ë¡œ ì˜¬ë¦´ì§€.. ì–´ë–»ê²Œ í•´ì•¼í• ì§€ ê³ ë¯¼
+    // ÇĞ»ı °èÁ¤ ¼öÁ¤
+	// ÇĞ±³ ¼öÁ¤ API´Â µû·Î ¸¸µé¾î¾ß ÇÒ µí (ex. °ü¸®ÀÚ)
+	// grade µµ ¸Å³â ÀÚµ¿À¸·Î ¿Ã¸±Áö.. ¾î¶»°Ô ÇØ¾ßÇÒÁö °í¹Î
 	public boolean updateStudent(Long studentId, StudentDTO studentDTO) {
 		try {
 			Student searchedStudent = studentRepository.findById(studentId).get();
@@ -132,7 +132,7 @@ public class StudentServiceImpl implements StudentService  {
 			if(ObjectUtils.isEmpty(searchedStudent))
 				return false;
 			
-			// ìš”ì²­ ë°›ì€ í•™ìƒ ì´ë¦„ìœ¼ë¡œ ì—…ë°ì´íŠ¸ 
+			// ¿äÃ» ¹ŞÀº ÇĞ»ı ÀÌ¸§À¸·Î ¾÷µ¥ÀÌÆ® 
 			if(!ObjectUtils.isEmpty(studentDTO.getUsername()))
 				searchedStudent.setUsername(studentDTO.getUsername());
 			if(!ObjectUtils.isEmpty(studentDTO.getPassword()))
@@ -156,13 +156,13 @@ public class StudentServiceImpl implements StudentService  {
 	}
 	
     
-    // íŠ¹ì • í•™ìƒ ê³„ì • ì •ë³´ ì¡°íšŒ
-    // ì–´ë–¤ ì •ë³´ë§Œì„ ë„˜ê¸¸ì§€ëŠ” ì¶”í›„ í”¼ë“œë°±ì„ í†µí•´ API ì¶”ê°€ë¡œ ë§Œë“¤ë©´ ë¨
+    // Æ¯Á¤ ÇĞ»ı °èÁ¤ Á¤º¸ Á¶È¸
+    // ¾î¶² Á¤º¸¸¸À» ³Ñ±æÁö´Â ÃßÈÄ ÇÇµå¹éÀ» ÅëÇØ API Ãß°¡·Î ¸¸µé¸é µÊ
     public StudentDTO getStudentById(Long studentId) {
 		try {
 			Student student = studentRepository.findById(studentId).get();
 			
-			// íŠ¹ì • í•™ìƒì˜ ê³„ì • ì •ë³´ë¥¼ ë‹´ì„ DTO ìƒì„±
+			// Æ¯Á¤ ÇĞ»ıÀÇ °èÁ¤ Á¤º¸¸¦ ´ãÀ» DTO »ı¼º
 			StudentDTO studentDTO = new StudentDTO();
 			
 			studentDTO.setId(student.getId());
@@ -182,6 +182,6 @@ public class StudentServiceImpl implements StudentService  {
 	}
 	
     
-    // í•™ìƒ ê³„ì • ì„¸ë¶€ì •ë³´ ì¡°íšŒ -> ì¶”í›„ ê´€ë¦¬ì ì¸¡ì—ì„œ ì–´ë–¤ ì •ë³´ë¥¼ ë³´ë©´ ì¢‹ì„ì§€ì— ë”°ë¼ ì¶”ê°€ ë³´ì™„ ì˜ˆ
+    // ÇĞ»ı °èÁ¤ ¼¼ºÎÁ¤º¸ Á¶È¸ -> ÃßÈÄ °ü¸®ÀÚ Ãø¿¡¼­ ¾î¶² Á¤º¸¸¦ º¸¸é ÁÁÀ»Áö¿¡ µû¶ó Ãß°¡ º¸¿Ï ¿¹
     
 }

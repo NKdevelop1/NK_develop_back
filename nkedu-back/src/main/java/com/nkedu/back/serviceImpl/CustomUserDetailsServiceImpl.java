@@ -24,17 +24,17 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
 
     @Override
     @Transactional
-    // ë¡œê·¸ì¸ì‹œì— DBì—ì„œ ìœ ì €ì •ë³´ì™€ ê¶Œí•œì •ë³´ë¥¼ ê°€ì ¸ì™€ì„œ í•´ë‹¹ ì •ë³´ë¥¼ ê¸°ë°˜ìœ¼ë¡œ userdetails.User ê°ì²´ë¥¼ ìƒì„±í•´ ë¦¬í„´
+    // ·Î±×ÀÎ½Ã¿¡ DB¿¡¼­ À¯ÀúÁ¤º¸¿Í ±ÇÇÑÁ¤º¸¸¦ °¡Á®¿Í¼­ ÇØ´ç Á¤º¸¸¦ ±â¹İÀ¸·Î userdetails.User °´Ã¼¸¦ »ı¼ºÇØ ¸®ÅÏ
     public UserDetails loadUserByUsername(final String username) {
 
         return userRepository.findOneWithAuthoritiesByUsername(username)
                 .map(user -> createUser(username, user))
-                .orElseThrow(() -> new UsernameNotFoundException(username + " -> ë°ì´í„°ë² ì´ìŠ¤ì—ì„œ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤."));
+                .orElseThrow(() -> new UsernameNotFoundException(username + " -> µ¥ÀÌÅÍº£ÀÌ½º¿¡¼­ Ã£À» ¼ö ¾ø½À´Ï´Ù."));
     }
 
     private org.springframework.security.core.userdetails.User createUser(String username, User user) {
         if (!user.isActivated()) {
-            throw new RuntimeException(username + " -> í™œì„±í™”ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
+            throw new RuntimeException(username + " -> È°¼ºÈ­µÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.");
         }
 
         List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
