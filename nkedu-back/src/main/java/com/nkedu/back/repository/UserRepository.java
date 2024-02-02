@@ -1,5 +1,6 @@
 package com.nkedu.back.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -11,6 +12,8 @@ import com.nkedu.back.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	
-    @EntityGraph(attributePaths = "authorities")
+    @EntityGraph(attributePaths="authorities")
     Optional<User> findOneWithAuthoritiesByUsername(String username);
+    
+    Optional<User> findOneByUsername(String username);
 }

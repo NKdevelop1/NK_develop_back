@@ -32,7 +32,9 @@ public class UserController {
     
     @PostMapping("/parent/signup")
     public ResponseEntity<Void> signup(@Valid @RequestBody ParentDto parentDto) {
-    	return userService.signup(parentDto) ? new ResponseEntity<>(null, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
+    	//return userService.signup(parentDto) ? new ResponseEntity<>(null, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	userService.signup(parentDto);
+    	return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @GetMapping("/user")

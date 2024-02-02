@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Optional;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,8 +67,8 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public boolean signup(ParentDto parentDto) {
         try{
-
-	        if (userRepository.findOneWithAuthoritiesByUsername(parentDto.getUsername()).orElse(null) != null) {
+        	// .orElse(null) != null
+	        if (ObjectUtils.isNotEmpty(userRepository.findOneByUsername(parentDto.getUsername()))) {
 	            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
 	        }
 	
@@ -80,6 +81,7 @@ public class UserServiceImpl implements UserService{
 	                .build();
 	        
 	        System.out.println("authority: " + authority.toString());
+	        System.out.println("authority_name: " + authority.getAuthorityName());
 	
 	        // 유저 정보를 만들어서 save
 	        Parent parent = (Parent) Parent.builder()
