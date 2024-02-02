@@ -1,5 +1,6 @@
 package com.nkedu.back.serviceImpl;
 
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -9,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nkedu.back.api.UserService;
 import com.nkedu.back.model.Authority;
+import com.nkedu.back.model.Parent;
+import com.nkedu.back.model.ParentDto;
 import com.nkedu.back.model.User;
 import com.nkedu.back.model.UserDto;
 import com.nkedu.back.repository.UserRepository;
@@ -51,6 +54,46 @@ public class UserServiceImpl implements UserService{
 	                .build();
 	
 	        userRepository.save(user);
+	        return true;
+        } catch(Exception e) {
+        	log.error("Failed: " + e.getMessage(),e);
+        }
+        return false;
+    
+    }
+    
+    // 부모 전용 signup
+    @Transactional
+    public boolean signup(ParentDto parentDto) {
+        try{
+
+	        if (userRepository.findOneWithAuthoritiesByUsername(parentDto.getUsername()).orElse(null) != null) {
+	            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
+	        }
+	
+	        System.out.println("getUserName: " + parentDto.getUsername());
+	        
+	        // 가입되어 있지 않은 회원이면,
+	        // 권한 정보 만들고
+	        Authority authority = Authority.builder()
+	                .authorityName("ROLE_USER")
+	                .build();
+	        
+	        System.out.println("authority: " + authority.toString());
+	
+	        // 유저 정보를 만들어서 save
+	        Parent parent = (Parent) Parent.builder()
+	                .username(parentDto.getUsername())
+	                .password(passwordEncoder.encode(parentDto.getPassword()))
+	                .nickname(parentDto.getNickname())
+	                .birth(parentDto.getBirth())
+	                .phoneNumber(parentDto.getPhoneNumber())
+	                .authorities(Collections.singleton(authority))
+	                .created(new Timestamp(System.currentTimeMillis()))
+	                .activated(true)
+	                .build();
+	
+	        userRepository.save(parent);
 	        return true;
         } catch(Exception e) {
         	log.error("Failed: " + e.getMessage(),e);

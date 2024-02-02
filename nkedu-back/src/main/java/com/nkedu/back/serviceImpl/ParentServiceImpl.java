@@ -26,6 +26,7 @@ public class ParentServiceImpl implements ParentService {
 	@Override
 	public boolean createParent(ParentDto parentDto) {
 		try {
+			/* SuperBuilder 적용해서 오류 뜬 상황. 테스트를 위하여 잠시 지워둠.
 			Parent parent = new Parent();
 			parent.setUsername(parentDto.getUsername());
 			parent.setPassword(parentDto.getPassword());
@@ -35,6 +36,7 @@ public class ParentServiceImpl implements ParentService {
 			parent.setCreated(new Timestamp(System.currentTimeMillis()));;
 			
 			parentRepository.save(parent);
+			*/
 			
 			return true;
 		} catch (Exception e) {

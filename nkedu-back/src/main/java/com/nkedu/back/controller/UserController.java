@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nkedu.back.api.UserService;
+import com.nkedu.back.model.ParentDto;
 import com.nkedu.back.model.User;
 import com.nkedu.back.model.UserDto;
 
@@ -25,9 +26,13 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signup(@Valid @RequestBody UserDto userDto
-    ) {
+    public ResponseEntity<User> signup(@Valid @RequestBody UserDto userDto) {
     	return userService.signup(userDto) ? new ResponseEntity<>(null, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
+    }
+    
+    @PostMapping("/parent/signup")
+    public ResponseEntity<Void> signup(@Valid @RequestBody ParentDto parentDto) {
+    	return userService.signup(parentDto) ? new ResponseEntity<>(null, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
     }
 
     @GetMapping("/user")

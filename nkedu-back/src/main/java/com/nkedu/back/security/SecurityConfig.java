@@ -37,9 +37,14 @@ public class SecurityConfig {
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				
 				// 모든 HttpServletRequest 에 접근 제한을 걸어둠
-				.authorizeHttpRequests(authorize -> authorize 
-						.requestMatchers("/parent/authenticate").permitAll()
-						.requestMatchers("/parent/login").permitAll()
+				.authorizeHttpRequests(authorize -> authorize
+						.requestMatchers("/api/parent/signup").permitAll()
+						.requestMatchers("/api/signup").permitAll()
+						.requestMatchers("/api/authenticate").permitAll()
+						
+						.requestMatchers("/parent/*").permitAll()
+						.requestMatchers("/student/*").permitAll()
+						
 						.requestMatchers("/favicon.ico").permitAll()
 						.anyRequest().authenticated() // 그 외 인증 없이 접근 불가능
 				 );
