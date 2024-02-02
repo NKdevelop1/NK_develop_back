@@ -28,17 +28,11 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) {
     	System.out.println("loadUserByUsername");
     	
-    	/*
-        return userRepository.findOneWithAuthoritiesByUsername(username)
-                .map(user -> createUser(username, user))
-                .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
-        */
-    	
-    	User user_tmp = userRepository.findOneWithAuthoritiesByUsername(username).get();
-    	//User user_tmp = userRepository.find(username).get();
+    	User user_tmp = userRepository.findOneByUsername(username).get();
     	System.out.println("user.getAuthorities(): " + user_tmp.toString() + user_tmp.getAuthorities());
-    	
-    	UserDetails userDetails = userRepository.findOneWithAuthoritiesByUsername(username)
+
+    	// Exception 부분은 공식문서 참고하여 수정할 예정입니다. (loadUserByUsername 함수)
+    	UserDetails userDetails = userRepository.findOneByUsername(username)
                 .map(user -> createUser(username, user))
                 .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
     	
@@ -59,6 +53,8 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
         List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
                 .collect(Collectors.toList());
+        
+        System.out.println("grantedAuthorities.get(0).getAuthority : " + grantedAuthorities.get(0).getAuthority());
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(),

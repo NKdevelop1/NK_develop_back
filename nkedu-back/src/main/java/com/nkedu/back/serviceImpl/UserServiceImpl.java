@@ -67,7 +67,6 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public boolean signup(ParentDto parentDto) {
         try{
-        	// .orElse(null) != null
 	        if (ObjectUtils.isNotEmpty(userRepository.findOneByUsername(parentDto.getUsername()))) {
 	            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
 	        }

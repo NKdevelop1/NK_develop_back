@@ -30,5 +30,5 @@ logging:
     
 jwt:
   header: Authorization
-  secret: oyIDVJvNIvVvEXSwaaFjm0mnkAUpWQg7pwsTxPAJoCpctNEctTnU6yeYVgw8RqMAXlHpu51GemvW
+  secret: oyIDVJvNIvVvEXSwaaFjm0mnkAUpWQg7pwsTxPAJoCpctNEctTnU6yeYVgw8RqMAXlHpu51GemvWrjIRJoCpctNEctTnU6yeYVgw8RqMAXlHpu51GemvWrjIAJIaiwirajARaharwh1241hwrHAi
   token-validity-in-seconds: 86400 # 약 60일
