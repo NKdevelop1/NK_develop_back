@@ -1,11 +1,12 @@
-insert into AUTHORITY (AUTHORITY_NAME) values ('ROLE_USER');
-insert into AUTHORITY (AUTHORITY_NAME) values ('ROLE_STUDENT');
-insert into AUTHORITY (AUTHORITY_NAME) values ('ROLE_PARENT');
-insert into AUTHORITY (AUTHORITY_NAME) values ('ROLE_TEACHER');
-insert into AUTHORITY (AUTHORITY_NAME) values ('ROLE_ADMIN');
+INSERT IGNORE INTO nkedu.authority (authority_name) VALUES ('ROLE_ADMIN');
+INSERT IGNORE INTO nkedu.authority (authority_name) VALUES ('ROLE_USER');
+INSERT IGNORE INTO nkedu.authority (authority_name) VALUES ('ROLE_STUDENT');
+INSERT IGNORE INTO nkedu.authority (authority_name) VALUES ('ROLE_PARENT');
+INSERT IGNORE INTO nkedu.authority (authority_name) VALUES ('ROLE_TEACHER');
 
-insert into parent (ID, USERNAME, PASSWORD, NICKNAME, CREATED, BIRTH, PHONE_NUMBER, DTYPE)
-	values (1, 'parent', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'parent', '2024-01-01', '2000-01-01', '010-1234-5678', 'parent');
+INSERT IGNORE INTO nkedu.user (`dtype`, `id`, `birth`,`created`, `nickname`,`password`, `phone_number`, `username`) VALUES ('admin', '1', '0001-01-01
+00:00:00' ,'0001-01-01', 'admin','$2a$10$BARPN8j46OKRLaaLKdExUOVCufsQcXAwAoYcDQJ/9xgyvzF9FVxrS' ,'010-0000-0000', 'admin');
 
-insert into USER_AUTHORITY (USER_ID, AUTHORITY_NAME) values (1, 'ROLE_PARENT');
-insert into USER_AUTHORITY (USER_ID, AUTHORITY_NAME) values (1, 'ROLE_ADMIN');
+
+insert IGNORE into nkedu.user_authority (user_id, authority_name) values (1, 'ROLE_USER');
+insert IGNORE into nkedu.user_authority (user_id, authority_name) values (1, 'ROLE_ADMIN');

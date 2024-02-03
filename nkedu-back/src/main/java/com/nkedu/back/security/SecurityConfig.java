@@ -2,6 +2,7 @@ package com.nkedu.back.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
@@ -9,14 +10,17 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+	private final TokenProvider tokenProvider;
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -38,16 +42,19 @@ public class SecurityConfig {
 
 				// 모든 HttpServletRequest 에 접근 제한을 걸어둠
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/api/parent/signup").permitAll()
-						.requestMatchers("/api/signup").permitAll()
-						.requestMatchers("/api/authenticate").permitAll()
+						// 로그인
+						.requestMatchers("/api/login").permitAll()
+						.requestMatchers("/api/refresh").permitAll()
 
-						.requestMatchers("/parent/*").permitAll()
-						.requestMatchers("/student/*").permitAll()
-
+						// favicon.ico 파일
 						.requestMatchers("/favicon.ico").permitAll()
-						.anyRequest().authenticated() // 그 외 인증 없이 접근 불가능
-				);
+						
+						// 그 외 인증 없이 접근 불가능						
+						.anyRequest().authenticated() 
+				)
+				
+				.addFilterBefore(new JwtFilter(tokenProvider),
+						UsernamePasswordAuthenticationFilter.class);
 
 		return httpSecurity.build();
 	}

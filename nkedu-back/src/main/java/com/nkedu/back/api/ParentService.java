@@ -7,24 +7,24 @@ import com.nkedu.back.dto.ParentDto;
 public interface ParentService {
 
 	/**
-	 * 부모님 계정 생성 (토큰이 필요함)
-	 * @param parent
+	 * 부모님 계정 생성
+	 * @param parentDto
 	 * @return Parent
 	 */
 	public boolean createParent(ParentDto parentDto);
 
 	/**
-	 * 부모님 계정 삭제 (토큰이 필요함)
+	 * 부모님 계정 삭제
 	 * @param id
 	 */
-	public boolean deleteParentById(Long id);
+	public boolean deleteByUsername(String username);
 	
 	/**
-	 * 부모님 계정 설정 (토큰이 필요함)
+	 * 부모님 계정 설정
 	 * @param parent
-	 * @return
+	 * @return boolean
 	 */
-	public boolean updateParent(Long id, ParentDto parentDto);
+	public boolean updateParent(String username, ParentDto parentDto);
 
 	/**
 	 * 부모님 계정 리스트 조회
@@ -35,9 +35,9 @@ public interface ParentService {
 	/**
 	 * 부모님 계정 정보 조회
 	 * @param id
-	 * @return Parent
+	 * @return ParentDto
 	 */
-	public ParentDto getParentById(Long id);
+	public ParentDto findByUsername(String username);
 
 	
 }

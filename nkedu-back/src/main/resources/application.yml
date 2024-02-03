@@ -3,27 +3,33 @@ server:
   port: 8080
 
 spring:
-  # https://sosow0212.tistory.com/13 -> 다양한 방법 중에 간단한 해당 방법 채택
-  profiles:
-    active:
-      local
-
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://localhost:3306/nkedu?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useSSL=true
 #    username: root
 #    password: root
 
+  # https://sosow0212.tistory.com/13 -> 다양한 방법 중에 간단한 해당 방법 채택
+  profiles:
+    active:
+      local
+      
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: update #create-drop #update
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+    defer-datasource-initialization: true
+  
+  sql:
+    init:
+      platform: mysql
+      mode: always
 
 logging:
   level:
@@ -36,4 +42,5 @@ logging:
 jwt:
   header: Authorization
   secret: oyIDVJvNIvVvEXSwaaFjm0mnkAUpWQg7pwsTxPAJoCpctNEctTnU6yeYVgw8RqMAXlHpu51GemvWrjIRJoCpctNEctTnU6yeYVgw8RqMAXlHpu51GemvWrjIAJIaiwirajARaharwh1241hwrHAi
-  token-validity-in-seconds: 86400 # 약 60일
+  access-token-validity-in-seconds: 3600 # 약 1시간
+  refresh-token-validity-in-seconds: 43200 # 약 30일
