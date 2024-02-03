@@ -25,7 +25,7 @@ public class ParentServiceImpl implements ParentService {
 	@Override
 	public boolean createParent(ParentDto parentDto) {
 		try {
-			/* SuperBuilder �����ؼ� ���� �� ��Ȳ. �׽�Ʈ�� ���Ͽ� ��� ������.
+			/*
 			Parent parent = new Parent();
 			parent.setUsername(parentDto.getUsername());
 			parent.setPassword(parentDto.getPassword());

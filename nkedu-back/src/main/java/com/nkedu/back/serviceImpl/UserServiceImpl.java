@@ -2,7 +2,9 @@ package com.nkedu.back.serviceImpl;
 
 import java.sql.Timestamp;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,19 +35,16 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public boolean signup(UserDto userDto) {
         try{
-
 	        if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
-	            throw new RuntimeException("�̹� ���ԵǾ� �ִ� �����Դϴ�.");
+	            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
 	        }
 
 	        System.out.println(userDto.getUsername());
-	        // ���ԵǾ� ���� ���� ȸ���̸�,
-	        // ���� ���� �����
+	        
 	        Authority authority = Authority.builder()
 	                .authorityName("ROLE_USER")
 	                .build();
 
-	        // ���� ������ ���� save
 	        User user = User.builder()
 	                .username(userDto.getUsername())
 	                .password(passwordEncoder.encode(userDto.getPassword()))
@@ -63,34 +62,34 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    // �θ� ���� signup
     @Transactional
     public boolean signup(ParentDto parentDto) {
         try{
-			System.out.println("!");
 	        if (ObjectUtils.isNotEmpty(userRepository.findOneByUsername(parentDto.getUsername()))) {
-	            throw new RuntimeException("�̹� ���ԵǾ� �ִ� �����Դϴ�.");
+	            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
 	        }
 	
 	        System.out.println("getUserName: " + parentDto.getUsername());
 	        
-	        // ���ԵǾ� ���� ���� ȸ���̸�,
-	        // ���� ���� �����
-	        Authority authority = Authority.builder()
+	        Set<Authority> authorities = new HashSet<Authority>();
+	        
+	        Authority authority_user = Authority.builder()
 	                .authorityName("ROLE_USER")
 	                .build();
+	        authorities.add(authority_user);
 	        
-	        System.out.println("authority: " + authority.toString());
-	        System.out.println("authority_name: " + authority.getAuthorityName());
+	        Authority authority_parent = Authority.builder()
+	        		.authorityName("ROLE_PARENT")
+	        		.build();
+	        authorities.add(authority_parent);
 	
-	        // ���� ������ ���� save
 	        Parent parent = (Parent) Parent.builder()
 	                .username(parentDto.getUsername())
 	                .password(passwordEncoder.encode(parentDto.getPassword()))
 	                .nickname(parentDto.getNickname())
 	                .birth(parentDto.getBirth())
 	                .phoneNumber(parentDto.getPhoneNumber())
-	                .authorities(Collections.singleton(authority))
+	                .authorities(authorities)
 	                .created(new Timestamp(System.currentTimeMillis()))
 	                .activated(true)
 	                .build();
@@ -104,13 +103,11 @@ public class UserServiceImpl implements UserService{
     
     }
 
-    // ����,���� ������ �������� �޼ҵ�
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities(String username) {
         return userRepository.findOneWithAuthoritiesByUsername(username);
     }
 
-    // ���� securityContext�� ����� username�� ������ �������� �޼ҵ�
     @Transactional(readOnly = true)
     public Optional<User> getMyUserWithAuthorities() {
         return SecurityUtil.getCurrentUsername()
