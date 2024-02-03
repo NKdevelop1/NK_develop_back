@@ -1,4 +1,4 @@
-package com.nkedu.back.model;
+package com.nkedu.back.entity;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -64,10 +64,14 @@ public class User {
 	@Column(name="phone_number", nullable=false)
 	private String phoneNumber;
 	
+    @JsonIgnore
+    @Column(name = "activated")
+    private boolean activated;
+    
 	@ManyToMany
 	@JoinTable(
 			name="user_authority",
-			joinColumns={@JoinColumn(name="id", referencedColumnName="id")},
+			joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
 			inverseJoinColumns={@JoinColumn(name="authority_name", referencedColumnName="authority_name")})
 	private Set<Authority> authorities;
 }

@@ -1,4 +1,4 @@
-package com.nkedu.back.model;
+package com.nkedu.back.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SchoolDTO {
-	
-	private Long id;
-	
-	private String schoolName;
+public class TokenDto {
+
+    private String token;
 }

@@ -16,15 +16,15 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-	
+
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 	private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-	
+
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
@@ -32,18 +32,24 @@ public class SecurityConfig {
 				.exceptionHandling(authenticationManager -> authenticationManager
 						.authenticationEntryPoint(jwtAuthenticationEntryPoint)
 						.accessDeniedHandler(jwtAccessDeniedHandler))
-				
+
 				.sessionManagement(configurer -> configurer
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				
-				// ¸ğµç HttpServletRequest ¿¡ Á¢±Ù Á¦ÇÑÀ» °É¾îµÒ
-				.authorizeHttpRequests(authorize -> authorize 
-						.requestMatchers("/parent/authenticate").permitAll()
-						.requestMatchers("/parent/login").permitAll()
+
+				// ëª¨ë“  HttpServletRequest ì— ì ‘ê·¼ ì œí•œì„ ê±¸ì–´ë‘ 
+				.authorizeHttpRequests(authorize -> authorize
+						.requestMatchers("/api/parent/signup").permitAll()
+						.requestMatchers("/api/signup").permitAll()
+						.requestMatchers("/api/authenticate").permitAll()
+
+						.requestMatchers("/parent/*").permitAll()
+						.requestMatchers("/student/*").permitAll()
+
 						.requestMatchers("/favicon.ico").permitAll()
-						.anyRequest().authenticated() // ±× ¿Ü ÀÎÁõ ¾øÀÌ Á¢±Ù ºÒ°¡´É
-				 );
-				
+						.anyRequest().authenticated() // ê·¸ ì™¸ ì¸ì¦ ì—†ì´ ì ‘ê·¼ ë¶ˆê°€ëŠ¥
+				);
+
 		return httpSecurity.build();
 	}
 }
+

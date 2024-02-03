@@ -2,39 +2,38 @@ package com.nkedu.back.api;
 
 import java.util.List;
 
-import com.nkedu.back.model.Parent;
-import com.nkedu.back.model.ParentDto;
+import com.nkedu.back.dto.ParentDto;
 
 public interface ParentService {
 
 	/**
-	 * ºÎ¸ğ´Ô °èÁ¤ »ı¼º (ÅäÅ«ÀÌ ÇÊ¿äÇÔ)
+	 * ë¶€ëª¨ë‹˜ ê³„ì • ìƒì„± (í† í°ì´ í•„ìš”í•¨)
 	 * @param parent
 	 * @return Parent
 	 */
 	public boolean createParent(ParentDto parentDto);
 
 	/**
-	 * ºÎ¸ğ´Ô °èÁ¤ »èÁ¦ (ÅäÅ«ÀÌ ÇÊ¿äÇÔ)
+	 * ë¶€ëª¨ë‹˜ ê³„ì • ì‚­ì œ (í† í°ì´ í•„ìš”í•¨)
 	 * @param id
 	 */
 	public boolean deleteParentById(Long id);
 	
 	/**
-	 * ºÎ¸ğ´Ô °èÁ¤ ¼³Á¤ (ÅäÅ«ÀÌ ÇÊ¿äÇÔ)
+	 * ë¶€ëª¨ë‹˜ ê³„ì • ì„¤ì • (í† í°ì´ í•„ìš”í•¨)
 	 * @param parent
 	 * @return
 	 */
 	public boolean updateParent(Long id, ParentDto parentDto);
 
 	/**
-	 * ºÎ¸ğ´Ô °èÁ¤ ¸®½ºÆ® Á¶È¸
+	 * ë¶€ëª¨ë‹˜ ê³„ì • ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
 	 * @return List<Parent>
 	 */
 	public List<ParentDto> getParents();
 
 	/**
-	 * ºÎ¸ğ´Ô °èÁ¤ Á¤º¸ Á¶È¸
+	 * ë¶€ëª¨ë‹˜ ê³„ì • ì •ë³´ ì¡°íšŒ
 	 * @param id
 	 * @return Parent
 	 */

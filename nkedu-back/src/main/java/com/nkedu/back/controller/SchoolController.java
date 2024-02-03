@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nkedu.back.api.SchoolService;
-import com.nkedu.back.model.SchoolDTO;
+import com.nkedu.back.dto.SchoolDTO;
 
 import lombok.RequiredArgsConstructor;
 

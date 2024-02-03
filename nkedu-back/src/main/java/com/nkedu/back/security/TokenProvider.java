@@ -28,35 +28,35 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class TokenProvider implements InitializingBean {
-	
+
 	private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 	private static final String AUTHORITES_KEY = "auth";
 	private final String secret;
 	private final long tokenValidityInMilliseconds;
 	private Key key;
-	
+
 	public TokenProvider(
 			@Value("${jwt.secret}") String secret,
 			@Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
 		this.secret = secret;
 		this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
 	}
-	
+
 	@Override
 	public void afterPropertiesSet() {
 		byte[] keyBytes = Decoders.BASE64.decode(secret);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 	}
-	
-	// ÅäÅ« »ı¼º (±âº»)
+
+	// í† í° ìƒì„± (ê¸°ë³¸)
 	public String createToken(Authentication authentication) {
 		String authorities = authentication.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
-		
+
 		long now = (new Date()).getTime();
 		Date validity = new Date(now + this.tokenValidityInMilliseconds);
-		
+
 		return Jwts.builder()
 				.setSubject(authentication.getName())
 				.claim(AUTHORITES_KEY, authorities)
@@ -64,40 +64,41 @@ public class TokenProvider implements InitializingBean {
 				.setExpiration(validity)
 				.compact();
 	}
-	
-	// »ı¼ºÇÑ JWT ÅäÅ«À» ¹ÙÅÁÀ¸·Î Authentication °´Ã¼ »ı¼º ÁøÇà
+
+	// ìƒì„±í•œ JWT í† í°ì„ ë°”íƒ•ìœ¼ë¡œ Authentication ê°ì²´ ìƒì„± ì§„í–‰
 	public Authentication getAuthentication(String token) {
-		// »ı¼ºµÈ token body ³»¿ë¿¡ ´ëÇÑ parse ÁøÇà
+		// ìƒì„±ëœ token body ë‚´ìš©ì— ëŒ€í•œ parse ì§„í–‰
 		Claims claims = Jwts
 				.parserBuilder()
 				.setSigningKey(key)
 				.build()
 				.parseClaimsJws(token)
 				.getBody();
-		
+
 		Collection<? extends GrantedAuthority> authorities =
 				Arrays.stream(claims.get(AUTHORITES_KEY).toString().split(","))
-					.map(SimpleGrantedAuthority::new)
-					.collect(Collectors.toList());
-		
+						.map(SimpleGrantedAuthority::new)
+						.collect(Collectors.toList());
+
 		User principal = new User(claims.getSubject(), "", authorities);
-		
+
 		return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 	}
-	
+
 	public boolean validateToken(String token) {
 		try {
 			Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
 			return true;
 		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-			logger.info("Àß¸øµÈ JWT ¼­¸íÀÔ´Ï´Ù.");
+			logger.info("ì˜ëª»ëœ JWT ì„œëª…ì…ë‹ˆë‹¤.");
 		} catch (ExpiredJwtException e) {
-			logger.info("¸¸·áµÈ JWT ÅäÅ«ÀÔ´Ï´Ù.");
+			logger.info("ë§Œë£Œëœ JWT í† í°ì…ë‹ˆë‹¤.");
 		} catch (UnsupportedJwtException e) {
-			logger.info("Áö¿øµÇÁö ¾Ê´Â JWT ÅäÅ«ÀÔ´Ï´Ù.");
+			logger.info("ì§€ì›ë˜ì§€ ì•ŠëŠ” JWT í† í°ì…ë‹ˆë‹¤.");
 		} catch (IllegalArgumentException e) {
-			logger.info("JWT ÅäÅ«ÀÌ Àß¸øµÇ¾ú½À´Ï´Ù.");
+			logger.info("JWT í† í°ì´ ì˜ëª»ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		}
 		return false;
 	}
 }
+

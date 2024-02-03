@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.nkedu.back.model.School;
-import com.nkedu.back.model.SchoolDTO;
+import com.nkedu.back.entity.School;
+import com.nkedu.back.dto.SchoolDTO;
 import com.nkedu.back.repository.SchoolRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,10 +19,10 @@ import com.nkedu.back.api.SchoolService;
 @Service
 @RequiredArgsConstructor
 public class SchoolServiceImpl implements SchoolService{
-	
+
 	private final SchoolRepository schoolRepository;
-	
-	// 학교 생성 
+
+	// 학교 생성
 	public boolean createSchool(SchoolDTO schoolDTO) {
 		try {
 			School school = new School();
@@ -34,31 +34,31 @@ public class SchoolServiceImpl implements SchoolService{
 		}
 		return false;
 	}
-	
-    // 등록된 학교 삭제 
-    public boolean deleteSchoolById(Long schoolId) {
-    	try{
-    		schoolRepository.deleteById(schoolId);
-    		
-    		return true;
-    	} catch (Exception e) {
-    		log.info("failed e : " + e.getMessage());
-    	}
-    	return false;
-    }
-    
-    // 등록된 학교 수정 
+
+	// 등록된 학교 삭제
+	public boolean deleteSchoolById(Long schoolId) {
+		try{
+			schoolRepository.deleteById(schoolId);
+
+			return true;
+		} catch (Exception e) {
+			log.info("failed e : " + e.getMessage());
+		}
+		return false;
+	}
+
+	// 등록된 학교 수정
 	public boolean updateSchool(Long schoolId, SchoolDTO schoolDTO) {
 		try {
 			School searchedSchool = schoolRepository.findById(schoolId).get();
-			
+
 			if(ObjectUtils.isEmpty(searchedSchool))
 				return false;
-			
-			// 요청 받은 학교 이름으로 업데이트 
+
+			// 요청 받은 학교 이름으로 업데이트
 			if(!ObjectUtils.isEmpty(schoolDTO.getSchoolName()))
 				searchedSchool.setSchoolName(schoolDTO.getSchoolName());
-			
+
 			schoolRepository.save(searchedSchool);
 			return true;
 		} catch (Exception e) {
@@ -66,29 +66,29 @@ public class SchoolServiceImpl implements SchoolService{
 		}
 		return false;
 	}
-	
-	
-    // 등록된 모든 학교 리스트 조회
-    public List<SchoolDTO> getAllSchools() {
-    	try {
-    		List<SchoolDTO> schoolDTOs = new ArrayList<>();
-    		
+
+
+	// 등록된 모든 학교 리스트 조회
+	public List<SchoolDTO> getAllSchools() {
+		try {
+			List<SchoolDTO> schoolDTOs = new ArrayList<>();
+
 			List<School> schools = schoolRepository.findAll();
-			
+
 			for(School school : schools) {
 				SchoolDTO schoolDTO = new SchoolDTO();
-				
+
 				schoolDTO.setId(school.getId());
 				schoolDTO.setSchoolName(school.getSchoolName());
-				
+
 				schoolDTOs.add(schoolDTO);
 			}
-			
+
 			return schoolDTOs;
 		} catch(Exception e) {
 			log.info("[Failed] e : " + e.getMessage());
 		}
 		return null;
-    }
-   
+	}
+
 }

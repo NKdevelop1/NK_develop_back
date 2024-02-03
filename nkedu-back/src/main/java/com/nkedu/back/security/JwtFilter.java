@@ -18,39 +18,40 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class JwtFilter extends GenericFilterBean {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
 	public static final String AUTHORIZATION_HEADER = "Authorization";
 	private final TokenProvider tokenProvider;
-	
-	// ÅäÅ«ÀÇ ÀÎÁõ Á¤º¸¸¦ SecurityContext ¿¡ ÀúÀå
+
+	// í† í°ì˜ ì¸ì¦ ì •ë³´ë¥¼ SecurityContext ì— ì €ì¥
 	@Override
-	public void doFilter(ServletRequest servletRequest, 
-			  			 ServletResponse servletResponse, 
-			  			 FilterChain filterChain) throws IOException, ServletException {
+	public void doFilter(ServletRequest servletRequest,
+						 ServletResponse servletResponse,
+						 FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 		String jwt = resolveToken(httpServletRequest);
 		String requestURI = httpServletRequest.getRequestURI();
-		
+
 		if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
 			Authentication authentication = tokenProvider.getAuthentication(jwt);
-			SecurityContextHolder.getContext().setAuthentication(authentication); // ÀúÀå
-			logger.debug("Security Context¿¡ '{}' ÀÎÁõ Á¤º¸¸¦ ÀúÀåÇß½À´Ï´Ù, uri: {}", authentication.getName(), requestURI);
+			SecurityContextHolder.getContext().setAuthentication(authentication); // ì €ì¥
+			logger.debug("Security Contextì— '{}' ì¸ì¦ ì •ë³´ë¥¼ ì €ì¥í–ˆìŠµë‹ˆë‹¤, uri: {}", authentication.getName(), requestURI);
 		} else {
-			logger.debug("À¯È¿ÇÑ JWT ÅäÅ«ÀÌ ¾ø½À´Ï´Ù. uri: {}", requestURI);
+			logger.debug("ìœ íš¨í•œ JWT í† í°ì´ ì—†ìŠµë‹ˆë‹¤. uri: {}", requestURI);
 		}
-		
+
 		filterChain.doFilter(servletRequest, servletResponse);
 	}
-	
-	// Request Header ¿¡¼­ ÅäÅ« Á¤º¸¸¦ ²¨³»¿À´Â ¸Ş¼Òµå
+
+	// Request Header ì—ì„œ í† í° ì •ë³´ë¥¼ êº¼ë‚´ì˜¤ëŠ” ë©”ì†Œë“œ
 	private String resolveToken(HttpServletRequest request) {
 		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-		
+
 		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
 			return bearerToken.substring(7);
 		}
-		
+
 		return null;
 	}
 }
+

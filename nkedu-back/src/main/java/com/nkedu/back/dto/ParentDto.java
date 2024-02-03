@@ -1,4 +1,4 @@
-package com.nkedu.back.model;
+package com.nkedu.back.dto;
 
 import java.sql.Date;
 
@@ -21,7 +21,7 @@ public class ParentDto {
 	
 	private String username;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // ¾²±â Àü¿ë
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // ì“°ê¸° ì „ìš©
 	private String password;
 	
 	private String nickname;

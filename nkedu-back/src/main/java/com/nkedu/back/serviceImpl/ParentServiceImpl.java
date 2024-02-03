@@ -1,6 +1,5 @@
 package com.nkedu.back.serviceImpl;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +8,8 @@ import org.springframework.util.ObjectUtils;
 
 
 import com.nkedu.back.api.ParentService;
-import com.nkedu.back.model.Parent;
-import com.nkedu.back.model.ParentDto;
+import com.nkedu.back.entity.Parent;
+import com.nkedu.back.dto.ParentDto;
 import com.nkedu.back.repository.ParentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +25,7 @@ public class ParentServiceImpl implements ParentService {
 	@Override
 	public boolean createParent(ParentDto parentDto) {
 		try {
+			/* SuperBuilder �����ؼ� ���� �� ��Ȳ. �׽�Ʈ�� ���Ͽ� ��� ������.
 			Parent parent = new Parent();
 			parent.setUsername(parentDto.getUsername());
 			parent.setPassword(parentDto.getPassword());
@@ -35,6 +35,7 @@ public class ParentServiceImpl implements ParentService {
 			parent.setCreated(new Timestamp(System.currentTimeMillis()));;
 			
 			parentRepository.save(parent);
+			*/
 			
 			return true;
 		} catch (Exception e) {
