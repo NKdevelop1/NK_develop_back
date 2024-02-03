@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nkedu.back.api.ParentService;
 import com.nkedu.back.dto.ParentDto;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 //@Slf4j
@@ -33,59 +35,60 @@ public class ParentController {
 		if (parentDtos != null) {
 			return new ResponseEntity<>(parentDtos, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST); 
 		}
 	}
 	
-	@GetMapping("/{parentId}")
-	public ResponseEntity<ParentDto> getParent(@PathVariable("parentId") Long parentId) {
-		// 토큰 필요
+	@GetMapping("/{username}")
+	public ResponseEntity<ParentDto> getParent(@PathVariable("username") String username) {
+		// 본인 혹은 관리자만 열람 가능하도록 토큰 필요
 		
-		ParentDto parentDto = parentService.getParentById(parentId);
+		ParentDto parentDto = parentService.findByUsername(username);
 		
 		if (parentDto != null) {
 			return new ResponseEntity<>(parentDto, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PutMapping("/{username}")
+	public ResponseEntity<Void> updateParent(@PathVariable("username") String username, @RequestBody ParentDto parentDto) {
+		// 토큰 필요
+		
+		boolean result = parentService.updateParent(username, parentDto);
+		
+		if (result == true) {
+			return new ResponseEntity<>(null, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Void> createParent(@Validated @RequestBody ParentDto parentDto) {
-		// 토큰 필요
 		
 		boolean result = parentService.createParent(parentDto);
 		
 		if (result == true) {
 			return new ResponseEntity<>(null, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@PutMapping("/{parentId}")
-	public ResponseEntity<Void> updateParent(@PathVariable("parentId") Long parentId, @RequestBody ParentDto parentDto) {
+	@DeleteMapping("/{username}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<Void> deleteParent(@PathVariable("username") String username) {
 		// 토큰 필요
 		
-		boolean result = parentService.updateParent(parentId, parentDto);
-		
-		if (result == true) {
-			return new ResponseEntity<>(null, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	
-	@DeleteMapping("/{parentId}")
-	public ResponseEntity<Void> deleteParent(@PathVariable("parentId") Long parentId) {
-		// 토큰 필요
-		
-		boolean result = parentService.deleteParentById(parentId);
+		boolean result = parentService.deleteByUsername(username);
 		
 		if (result == true) {
 			return new ResponseEntity<>(HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }

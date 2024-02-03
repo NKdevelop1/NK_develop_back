@@ -11,8 +11,10 @@ import com.nkedu.back.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 	
+	/*
     @EntityGraph(attributePaths="authorities")
     Optional<User> findOneWithAuthoritiesByUsername(String username);
+    */
     
     Optional<User> findOneByUsername(String username);
 }

@@ -42,11 +42,6 @@ public class SecurityConfig {
 
 				// 모든 HttpServletRequest 에 접근 제한을 걸어둠
 				.authorizeHttpRequests(authorize -> authorize
-						// 회원가입
-						.requestMatchers("/api/parent/signup").permitAll()
-						.requestMatchers("/api/student/signup").permitAll()
-						.requestMatchers("/api/teacher/signup").permitAll()
-						
 						// 로그인
 						.requestMatchers("/api/login").permitAll()
 						.requestMatchers("/api/refresh").permitAll()

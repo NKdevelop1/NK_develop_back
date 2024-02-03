@@ -34,7 +34,7 @@ public class StudentController  {
 		if (studentDTOs != null) {
 			return new ResponseEntity<>(studentDTOs, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}	
 	}
 	
@@ -43,7 +43,7 @@ public class StudentController  {
 	public ResponseEntity<Void> createStudent (@Validated @RequestBody StudentDTO studentDTO){
 		return studentService.createStudent(studentDTO) ?
 			       new ResponseEntity<>(null, HttpStatus.OK) :
-			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);	
+			       new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);	
 	}
 	
 	// 학생 계정 삭제 
@@ -51,7 +51,7 @@ public class StudentController  {
 	public ResponseEntity<Void> deleteStudent(@PathVariable Long studentId){
 		return studentService.deleteStudentById(studentId) ?
 			       new ResponseEntity<>(null, HttpStatus.OK) :
-			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			       new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 	
 	
@@ -60,7 +60,7 @@ public class StudentController  {
 	public ResponseEntity<Void> updateSchool (@PathVariable Long studentId, @RequestBody StudentDTO studentDTO){
 		return studentService.updateStudent(studentId,studentDTO) ?
 			       new ResponseEntity<>(null, HttpStatus.OK) :
-			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			       new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 	
 	// 특정 학생 계정 정보 조회 
@@ -72,7 +72,7 @@ public class StudentController  {
 		if (studentDTO != null) {
 			return new ResponseEntity<>(studentDTO, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 	

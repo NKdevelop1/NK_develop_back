@@ -8,13 +8,11 @@ import com.nkedu.back.dto.UserDto;
 
 public interface UserService {
 
-	
+	/*
 	public boolean signup(UserDto userDto);
-	
-	public boolean signup(ParentDto parentDto);
 	
 	public Optional<User> getUserWithAuthorities(String username);
 	
 	public Optional<User> getMyUserWithAuthorities();
-	 
+	*/
 }

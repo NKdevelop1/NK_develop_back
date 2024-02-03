@@ -33,7 +33,7 @@ public class SchoolController {
 		if (schoolDTOs != null) {
 			return new ResponseEntity<>(schoolDTOs, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 
 		}
 	}
@@ -43,7 +43,7 @@ public class SchoolController {
 	public ResponseEntity<Void> createSchool (@RequestBody SchoolDTO schoolDTO){
 		return schoolService.createSchool(schoolDTO) ?
 			       new ResponseEntity<>(null, HttpStatus.OK) :
-			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			       new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 	
 	// 학교 계정 삭제 
@@ -51,7 +51,7 @@ public class SchoolController {
 	public ResponseEntity<Void> deleteSchool (@PathVariable Long schoolId){
 		return schoolService.deleteSchoolById(schoolId) ?
 			       new ResponseEntity<>(null, HttpStatus.OK) :
-			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			       new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 
 	// 학교 계정 정 
@@ -59,6 +59,6 @@ public class SchoolController {
 	public ResponseEntity<Void> updateSchool (@PathVariable Long schoolId, @RequestBody SchoolDTO schoolDto){
 		return schoolService.updateSchool(schoolId,schoolDto) ?
 			       new ResponseEntity<>(null, HttpStatus.OK) :
-			       new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			       new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 }

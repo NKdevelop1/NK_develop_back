@@ -25,18 +25,14 @@ public class UserController {
 	
     private final UserService userService;
 
+    /*
     @PostMapping("/signup")
     public ResponseEntity<User> signup(@Valid @RequestBody UserDto userDto) {
     	return userService.signup(userDto) ? new ResponseEntity<>(null, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 
     }
-    
-    @PostMapping("/parent/signup")
-    public ResponseEntity<Void> signup(@Valid @RequestBody ParentDto parentDto) {
-    	//return userService.signup(parentDto) ? new ResponseEntity<>(null, HttpStatus.OK): new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-    	userService.signup(parentDto);
-    	return new ResponseEntity<>(null, HttpStatus.OK);
-    }
+    */
 
+    /*
     @GetMapping("/user")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<User> getMyUserInfo() {
@@ -48,4 +44,5 @@ public class UserController {
     public ResponseEntity<User> getUserInfo(@PathVariable String username) {
         return ResponseEntity.ok(userService.getUserWithAuthorities(username).get());
     }
+    */
 }

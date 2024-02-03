@@ -1,4 +1,4 @@
-package com.nkedu.back.serviceImpl;
+package com.nkedu.back.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
