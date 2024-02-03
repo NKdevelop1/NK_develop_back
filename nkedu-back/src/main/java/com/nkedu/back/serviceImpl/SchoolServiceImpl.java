@@ -19,10 +19,10 @@ import com.nkedu.back.api.SchoolService;
 @Service
 @RequiredArgsConstructor
 public class SchoolServiceImpl implements SchoolService{
-	
+
 	private final SchoolRepository schoolRepository;
-	
-	// ÇĞ±³ »ı¼º 
+
+	// í•™êµ ìƒì„±
 	public boolean createSchool(SchoolDTO schoolDTO) {
 		try {
 			School school = new School();
@@ -34,31 +34,31 @@ public class SchoolServiceImpl implements SchoolService{
 		}
 		return false;
 	}
-	
-    // µî·ÏµÈ ÇĞ±³ »èÁ¦ 
-    public boolean deleteSchoolById(Long schoolId) {
-    	try{
-    		schoolRepository.deleteById(schoolId);
-    		
-    		return true;
-    	} catch (Exception e) {
-    		log.info("failed e : " + e.getMessage());
-    	}
-    	return false;
-    }
-    
-    // µî·ÏµÈ ÇĞ±³ ¼öÁ¤ 
+
+	// ë“±ë¡ëœ í•™êµ ì‚­ì œ
+	public boolean deleteSchoolById(Long schoolId) {
+		try{
+			schoolRepository.deleteById(schoolId);
+
+			return true;
+		} catch (Exception e) {
+			log.info("failed e : " + e.getMessage());
+		}
+		return false;
+	}
+
+	// ë“±ë¡ëœ í•™êµ ìˆ˜ì •
 	public boolean updateSchool(Long schoolId, SchoolDTO schoolDTO) {
 		try {
 			School searchedSchool = schoolRepository.findById(schoolId).get();
-			
+
 			if(ObjectUtils.isEmpty(searchedSchool))
 				return false;
-			
-			// ¿äÃ» ¹ŞÀº ÇĞ±³ ÀÌ¸§À¸·Î ¾÷µ¥ÀÌÆ® 
+
+			// ìš”ì²­ ë°›ì€ í•™êµ ì´ë¦„ìœ¼ë¡œ ì—…ë°ì´íŠ¸
 			if(!ObjectUtils.isEmpty(schoolDTO.getSchoolName()))
 				searchedSchool.setSchoolName(schoolDTO.getSchoolName());
-			
+
 			schoolRepository.save(searchedSchool);
 			return true;
 		} catch (Exception e) {
@@ -66,29 +66,29 @@ public class SchoolServiceImpl implements SchoolService{
 		}
 		return false;
 	}
-	
-	
-    // µî·ÏµÈ ¸ğµç ÇĞ±³ ¸®½ºÆ® Á¶È¸
-    public List<SchoolDTO> getAllSchools() {
-    	try {
-    		List<SchoolDTO> schoolDTOs = new ArrayList<>();
-    		
+
+
+	// ë“±ë¡ëœ ëª¨ë“  í•™êµ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
+	public List<SchoolDTO> getAllSchools() {
+		try {
+			List<SchoolDTO> schoolDTOs = new ArrayList<>();
+
 			List<School> schools = schoolRepository.findAll();
-			
+
 			for(School school : schools) {
 				SchoolDTO schoolDTO = new SchoolDTO();
-				
+
 				schoolDTO.setId(school.getId());
 				schoolDTO.setSchoolName(school.getSchoolName());
-				
+
 				schoolDTOs.add(schoolDTO);
 			}
-			
+
 			return schoolDTOs;
 		} catch(Exception e) {
 			log.info("[Failed] e : " + e.getMessage());
 		}
 		return null;
-    }
-   
+	}
+
 }

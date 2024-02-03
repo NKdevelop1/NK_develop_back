@@ -19,41 +19,41 @@ import java.util.stream.Collectors;
 @Component("userDetailsService")
 @RequiredArgsConstructor
 public class CustomUserDetailsServiceImpl implements UserDetailsService {
-	
+
     private final UserRepository userRepository;
 
     @Override
     @Transactional
-    // ·Î±×ÀÎ½Ã¿¡ DB¿¡¼­ À¯ÀúÁ¤º¸¿Í ±ÇÇÑÁ¤º¸¸¦ °¡Á®¿Í¼­ ÇØ´ç Á¤º¸¸¦ ±â¹İÀ¸·Î userdetails.User °´Ã¼¸¦ »ı¼ºÇØ ¸®ÅÏ
+    // ë¡œê·¸ì¸ì‹œì— DBì—ì„œ ìœ ì €ì •ë³´ì™€ ê¶Œí•œì •ë³´ë¥¼ ê°€ì ¸ì™€ì„œ í•´ë‹¹ ì •ë³´ë¥¼ ê¸°ë°˜ìœ¼ë¡œ userdetails.User ê°ì²´ë¥¼ ìƒì„±í•´ ë¦¬í„´
     public UserDetails loadUserByUsername(final String username) {
-    	System.out.println("loadUserByUsername");
-    	
-    	User user_tmp = userRepository.findOneByUsername(username).get();
-    	System.out.println("user.getAuthorities(): " + user_tmp.toString() + user_tmp.getAuthorities());
+        System.out.println("loadUserByUsername");
 
-    	// Exception ºÎºĞÀº °ø½Ä¹®¼­ Âü°íÇÏ¿© ¼öÁ¤ÇÒ ¿¹Á¤ÀÔ´Ï´Ù. (loadUserByUsername ÇÔ¼ö)
-    	UserDetails userDetails = userRepository.findOneByUsername(username)
+        User user_tmp = userRepository.findOneByUsername(username).get();
+        System.out.println("user.getAuthorities(): " + user_tmp.toString() + user_tmp.getAuthorities());
+
+        // Exception ë¶€ë¶„ì€ ê³µì‹ë¬¸ì„œ ì°¸ê³ í•˜ì—¬ ìˆ˜ì •í•  ì˜ˆì •ì…ë‹ˆë‹¤. (loadUserByUsername í•¨ìˆ˜)
+        UserDetails userDetails = userRepository.findOneByUsername(username)
                 .map(user -> createUser(username, user))
-                .orElseThrow(() -> new UsernameNotFoundException(username + " -> µ¥ÀÌÅÍº£ÀÌ½º¿¡¼­ Ã£À» ¼ö ¾ø½À´Ï´Ù."));
-    	
-    	System.out.println("userDetails: " + userDetails.toString());
-    	
-    	return userDetails;
-    	
+                .orElseThrow(() -> new UsernameNotFoundException(username + " -> ë°ì´í„°ë² ì´ìŠ¤ì—ì„œ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤."));
+
+        System.out.println("userDetails: " + userDetails.toString());
+
+        return userDetails;
+
     }
 
     private org.springframework.security.core.userdetails.User createUser(String username, User user) {
-    	
-    	System.out.println("user: " + user.toString());
-    	
+
+        System.out.println("user: " + user.toString());
+
         if (!user.isActivated()) {
-            throw new RuntimeException(username + " -> È°¼ºÈ­µÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.");
+            throw new RuntimeException(username + " -> í™œì„±í™”ë˜ì–´ ìˆì§€ ì•ŠìŠµë‹ˆë‹¤.");
         }
 
         List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
                 .collect(Collectors.toList());
-        
+
         System.out.println("grantedAuthorities.get(0).getAuthority : " + grantedAuthorities.get(0).getAuthority());
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(),

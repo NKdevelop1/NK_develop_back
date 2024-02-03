@@ -35,17 +35,17 @@ public class UserServiceImpl implements UserService{
         try{
 
 	        if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
-	            throw new RuntimeException("ÀÌ¹Ì °¡ÀÔµÇ¾î ÀÖ´Â À¯ÀúÀÔ´Ï´Ù.");
+	            throw new RuntimeException("ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 	        }
-	
+
 	        System.out.println(userDto.getUsername());
-	        // °¡ÀÔµÇ¾î ÀÖÁö ¾ÊÀº È¸¿øÀÌ¸é,
-	        // ±ÇÇÑ Á¤º¸ ¸¸µé°í
+	        // ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½Ì¸ï¿½,
+	        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	        Authority authority = Authority.builder()
 	                .authorityName("ROLE_USER")
 	                .build();
-	
-	        // À¯Àú Á¤º¸¸¦ ¸¸µé¾î¼­ save
+
+	        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î¼­ save
 	        User user = User.builder()
 	                .username(userDto.getUsername())
 	                .password(passwordEncoder.encode(userDto.getPassword()))
@@ -53,28 +53,29 @@ public class UserServiceImpl implements UserService{
 	                .authorities(Collections.singleton(authority))
 	                .activated(true)
 	                .build();
-	
+
 	        userRepository.save(user);
 	        return true;
         } catch(Exception e) {
         	log.error("Failed: " + e.getMessage(),e);
         }
         return false;
-    
+
     }
-    
-    // ºÎ¸ð Àü¿ë signup
+
+    // ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ signup
     @Transactional
     public boolean signup(ParentDto parentDto) {
         try{
+			System.out.println("!");
 	        if (ObjectUtils.isNotEmpty(userRepository.findOneByUsername(parentDto.getUsername()))) {
-	            throw new RuntimeException("ÀÌ¹Ì °¡ÀÔµÇ¾î ÀÖ´Â À¯ÀúÀÔ´Ï´Ù.");
+	            throw new RuntimeException("ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 	        }
 	
 	        System.out.println("getUserName: " + parentDto.getUsername());
 	        
-	        // °¡ÀÔµÇ¾î ÀÖÁö ¾ÊÀº È¸¿øÀÌ¸é,
-	        // ±ÇÇÑ Á¤º¸ ¸¸µé°í
+	        // ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½Ì¸ï¿½,
+	        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 	        Authority authority = Authority.builder()
 	                .authorityName("ROLE_USER")
 	                .build();
@@ -82,7 +83,7 @@ public class UserServiceImpl implements UserService{
 	        System.out.println("authority: " + authority.toString());
 	        System.out.println("authority_name: " + authority.getAuthorityName());
 	
-	        // À¯Àú Á¤º¸¸¦ ¸¸µé¾î¼­ save
+	        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î¼­ save
 	        Parent parent = (Parent) Parent.builder()
 	                .username(parentDto.getUsername())
 	                .password(passwordEncoder.encode(parentDto.getPassword()))
@@ -103,13 +104,13 @@ public class UserServiceImpl implements UserService{
     
     }
 
-    // À¯Àú,±ÇÇÑ Á¤º¸¸¦ °¡Á®¿À´Â ¸Þ¼Òµå
+    // ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthorities(String username) {
         return userRepository.findOneWithAuthoritiesByUsername(username);
     }
 
-    // ÇöÀç securityContext¿¡ ÀúÀåµÈ usernameÀÇ Á¤º¸¸¸ °¡Á®¿À´Â ¸Þ¼Òµå
+    // ï¿½ï¿½ï¿½ï¿½ securityContextï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ usernameï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½
     @Transactional(readOnly = true)
     public Optional<User> getMyUserWithAuthorities() {
         return SecurityUtil.getCurrentUsername()
