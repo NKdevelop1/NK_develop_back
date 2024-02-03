@@ -1,4 +1,4 @@
-package com.nkedu.back.model;
+package com.nkedu.back.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

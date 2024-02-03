@@ -2,7 +2,7 @@ package com.nkedu.back.api;
 
 import java.util.List;
 
-import com.nkedu.back.model.StudentDTO;
+import com.nkedu.back.dto.StudentDTO;
 
 
 public interface StudentService {

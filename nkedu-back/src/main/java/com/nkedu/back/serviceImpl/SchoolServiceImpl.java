@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import com.nkedu.back.model.School;
-import com.nkedu.back.model.SchoolDTO;
+import com.nkedu.back.entity.School;
+import com.nkedu.back.dto.SchoolDTO;
 import com.nkedu.back.repository.SchoolRepository;
 
 import lombok.RequiredArgsConstructor;

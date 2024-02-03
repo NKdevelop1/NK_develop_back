@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nkedu.back.api.ParentService;
-import com.nkedu.back.model.ParentDto;
+import com.nkedu.back.dto.ParentDto;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 //@Slf4j
 @RequiredArgsConstructor

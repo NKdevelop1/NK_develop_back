@@ -1,7 +1,6 @@
 package com.nkedu.back.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nkedu.back.model.SchoolDTO;
-import com.nkedu.back.model.Student;
-import com.nkedu.back.model.StudentDTO;
+import com.nkedu.back.dto.StudentDTO;
 import com.nkedu.back.api.StudentService;
 
 import lombok.RequiredArgsConstructor;

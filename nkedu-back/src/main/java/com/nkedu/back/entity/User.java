@@ -1,4 +1,4 @@
-package com.nkedu.back.model;
+package com.nkedu.back.entity;
 
 import java.sql.Date;
 import java.sql.Timestamp;

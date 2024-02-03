@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nkedu.back.api.UserService;
-import com.nkedu.back.model.Authority;
-import com.nkedu.back.model.Parent;
-import com.nkedu.back.model.ParentDto;
-import com.nkedu.back.model.User;
-import com.nkedu.back.model.UserDto;
+import com.nkedu.back.entity.Authority;
+import com.nkedu.back.entity.Parent;
+import com.nkedu.back.dto.ParentDto;
+import com.nkedu.back.entity.User;
+import com.nkedu.back.dto.UserDto;
 import com.nkedu.back.repository.UserRepository;
 import com.nkedu.back.security.SecurityUtil;
 

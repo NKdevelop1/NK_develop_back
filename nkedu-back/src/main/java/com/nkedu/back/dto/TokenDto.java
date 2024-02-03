@@ -1,4 +1,4 @@
-package com.nkedu.back.model;
+package com.nkedu.back.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

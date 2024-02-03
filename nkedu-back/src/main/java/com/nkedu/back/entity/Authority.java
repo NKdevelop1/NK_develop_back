@@ -1,4 +1,4 @@
-package com.nkedu.back.model;
+package com.nkedu.back.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

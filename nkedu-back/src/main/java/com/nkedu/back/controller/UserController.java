@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nkedu.back.api.UserService;
-import com.nkedu.back.model.ParentDto;
-import com.nkedu.back.model.User;
-import com.nkedu.back.model.UserDto;
+import com.nkedu.back.dto.ParentDto;
+import com.nkedu.back.entity.User;
+import com.nkedu.back.dto.UserDto;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

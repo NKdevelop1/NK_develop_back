@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nkedu.back.model.LoginDto;
-import com.nkedu.back.model.TokenDto;
+import com.nkedu.back.dto.LoginDto;
+import com.nkedu.back.dto.TokenDto;
 import com.nkedu.back.security.JwtFilter;
 import com.nkedu.back.security.TokenProvider;
 

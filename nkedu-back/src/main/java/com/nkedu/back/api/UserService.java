@@ -2,9 +2,9 @@ package com.nkedu.back.api;
 
 import java.util.Optional;
 
-import com.nkedu.back.model.ParentDto;
-import com.nkedu.back.model.User;
-import com.nkedu.back.model.UserDto;
+import com.nkedu.back.dto.ParentDto;
+import com.nkedu.back.entity.User;
+import com.nkedu.back.dto.UserDto;
 
 public interface UserService {
 

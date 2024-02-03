@@ -1,4 +1,4 @@
-package com.nkedu.back.model;
+package com.nkedu.back.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

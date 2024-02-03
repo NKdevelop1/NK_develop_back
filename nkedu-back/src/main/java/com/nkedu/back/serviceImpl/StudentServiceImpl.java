@@ -1,18 +1,16 @@
 package com.nkedu.back.serviceImpl;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import com.nkedu.back.api.StudentService;
-import com.nkedu.back.model.School;
-import com.nkedu.back.model.Student;
-import com.nkedu.back.model.StudentDTO;
+import com.nkedu.back.entity.School;
+import com.nkedu.back.entity.Student;
+import com.nkedu.back.dto.StudentDTO;
 import com.nkedu.back.repository.SchoolRepository;
 import com.nkedu.back.repository.StudentRepository;
 

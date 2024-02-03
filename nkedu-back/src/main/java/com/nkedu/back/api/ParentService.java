@@ -2,8 +2,7 @@ package com.nkedu.back.api;
 
 import java.util.List;
 
-import com.nkedu.back.model.Parent;
-import com.nkedu.back.model.ParentDto;
+import com.nkedu.back.dto.ParentDto;
 
 public interface ParentService {
 

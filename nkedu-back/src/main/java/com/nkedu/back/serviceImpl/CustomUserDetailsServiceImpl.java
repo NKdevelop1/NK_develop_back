@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.nkedu.back.model.User;
+import com.nkedu.back.entity.User;
 import com.nkedu.back.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
