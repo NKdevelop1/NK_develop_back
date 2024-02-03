@@ -15,8 +15,8 @@ import lombok.Setter;
 @DiscriminatorValue("school")
 @JsonInclude(Include.NON_NULL)
 public class School extends User{
-    // @Pattern(regexp = ".*°íµîÇĞ±³$",message = "***°íµîÇĞ±³ ÇüÅÂÀÇ ÀÔ·Â °¡´ÉÇÕ´Ï´Ù.") 
-	// -> Ãß°¡ÇÏ°í ½ÍÀºµ¥, Valid °ü·Ã ¾î³ëÅ×ÀÌ¼ÇÀ» ¸øÀâÀ½ ³ªÁß¿¡ ÇØ°á ÈÄ Ãß°¡ ¿¹Á¤ 
+    // @Pattern(regexp = ".*ê³ ë“±í•™êµ$",message = "***ê³ ë“±í•™êµ í˜•íƒœì˜ ì…ë ¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.") 
+	// -> ì¶”ê°€í•˜ê³  ì‹¶ì€ë°, Valid ê´€ë ¨ ì–´ë…¸í…Œì´ì…˜ì„ ëª»ì¡ìŒ ë‚˜ì¤‘ì— í•´ê²° í›„ ì¶”ê°€ ì˜ˆì • 
 	@Column(name="schoolName", unique = true)
 	private String schoolName;
 }

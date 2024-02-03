@@ -40,7 +40,7 @@ public class ParentController {
 	
 	@GetMapping("/{parentId}")
 	public ResponseEntity<ParentDto> getParent(@PathVariable("parentId") Long parentId) {
-		// ÅäÅ« ÇÊ¿ä
+		// í† í° í•„ìš”
 		
 		ParentDto parentDto = parentService.getParentById(parentId);
 		
@@ -53,7 +53,7 @@ public class ParentController {
 	
 	@PostMapping
 	public ResponseEntity<Void> createParent(@Validated @RequestBody ParentDto parentDto) {
-		// ÅäÅ« ÇÊ¿ä
+		// í† í° í•„ìš”
 		
 		boolean result = parentService.createParent(parentDto);
 		
@@ -66,7 +66,7 @@ public class ParentController {
 	
 	@PutMapping("/{parentId}")
 	public ResponseEntity<Void> updateParent(@PathVariable("parentId") Long parentId, @RequestBody ParentDto parentDto) {
-		// ÅäÅ« ÇÊ¿ä
+		// í† í° í•„ìš”
 		
 		boolean result = parentService.updateParent(parentId, parentDto);
 		
@@ -79,7 +79,7 @@ public class ParentController {
 	
 	@DeleteMapping("/{parentId}")
 	public ResponseEntity<Void> deleteParent(@PathVariable("parentId") Long parentId) {
-		// ÅäÅ« ÇÊ¿ä
+		// í† í° í•„ìš”
 		
 		boolean result = parentService.deleteParentById(parentId);
 		
