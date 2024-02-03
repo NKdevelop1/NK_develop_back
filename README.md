@@ -27,7 +27,12 @@
   - `com.nkedu.back.api` : API 인터페이스
   - `com.nkedu.back.serviceImpl` : API 구현체 클래스
   - `com.nkedu.back.controller` : API 컨트롤러 클래스
-  - `com.nkedu.back.model` : 데이터베이스 객체 클래스
+    
+  - `com.nkedu.back.repository` : 데이터베이스 레포지토리 클래스
+  - `com.nkedu.back.entity` : 데이터베이스 엔터티 클래스
+  - `com.nkedu.back.dto` : 데이터베이스 DTO (Data Transfer Object) 클래스
+
+  - `com.nkedu.back.security` : Spring Security 관련 클래스
 
 - 깃허브 관리
   - `develop` 브랜치를 바탕으로 기능마다 새로운 브랜치를 만들어 개발을 진행한다.
