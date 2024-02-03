@@ -7,6 +7,11 @@ spring:
   profiles:
     active:
       local
+  
+  sql:
+    init:
+      platform: mysql
+      mode: always
 
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
@@ -19,7 +24,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: update #create-drop #update
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
