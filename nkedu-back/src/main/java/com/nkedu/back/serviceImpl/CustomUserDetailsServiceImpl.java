@@ -28,9 +28,6 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(final String username) {
         System.out.println("loadUserByUsername");
 
-        User user_tmp = userRepository.findOneByUsername(username).get();
-        System.out.println("user.getAuthorities(): " + user_tmp.toString() + user_tmp.getAuthorities());
-
         // Exception 부분은 공식문서 참고하여 수정할 예정입니다. (loadUserByUsername 함수)
         UserDetails userDetails = userRepository.findOneByUsername(username)
                 .map(user -> createUser(username, user))
@@ -43,8 +40,6 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     }
 
     private org.springframework.security.core.userdetails.User createUser(String username, User user) {
-
-        System.out.println("user: " + user.toString());
 
         if (!user.isActivated()) {
             throw new RuntimeException(username + " -> 활성화되어 있지 않습니다.");

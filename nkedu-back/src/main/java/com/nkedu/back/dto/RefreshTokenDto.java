@@ -11,9 +11,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenDto {
-
-	private String refreshToken;
+public class RefreshTokenDto {
 	
-    private String accessToken;
+	private String refreshToken;
 }

@@ -2,6 +2,7 @@ package com.nkedu.back.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -47,6 +49,7 @@ public class SecurityConfig {
 						
 						// 로그인
 						.requestMatchers("/api/login").permitAll()
+						.requestMatchers("/api/refresh").permitAll()
 
 						// favicon.ico 파일
 						.requestMatchers("/favicon.ico").permitAll()
