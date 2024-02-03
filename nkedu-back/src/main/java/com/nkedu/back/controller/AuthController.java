@@ -3,11 +3,13 @@ package com.nkedu.back.controller;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +31,7 @@ public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @PostMapping("/authenticate")
+    @PostMapping("/login")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
     	
     	System.out.println(loginDto.toString());
@@ -59,11 +61,21 @@ public class AuthController {
             System.out.println("authentication은 null이 아닙니다.");
         }
 
+        /*
         HttpHeaders httpHeaders = new HttpHeaders();
         // response header에 jwt token에 넣어줌
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        */
 
         // tokenDto를 이용해 response body에도 넣어서 리턴
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        //return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(new TokenDto(jwt), HttpStatus.OK);
     }
+    
+    @GetMapping("/login_check")
+    @PreAuthorize("ROLE_USER")
+    public ResponseEntity<Void> login_check() {
+    	return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+    
 }
