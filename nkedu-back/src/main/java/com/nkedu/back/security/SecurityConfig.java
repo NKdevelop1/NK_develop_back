@@ -45,6 +45,13 @@ public class SecurityConfig {
 						// 로그인
 						.requestMatchers("/api/login").permitAll()
 						.requestMatchers("/api/refresh").permitAll()
+						.requestMatchers("/api/parent/**").permitAll()
+						.requestMatchers("/api/student/**").permitAll()
+						.requestMatchers("/api/teacher/**").permitAll()
+						.requestMatchers("/api/school/**").permitAll()
+
+
+
 
 						// favicon.ico 파일
 						.requestMatchers("/favicon.ico").permitAll()

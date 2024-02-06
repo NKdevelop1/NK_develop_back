@@ -28,7 +28,7 @@ public class SchoolController {
 	// 전체 학교 리스트 조회 
 	@GetMapping("/school")
 	public ResponseEntity<List<SchoolDTO>>getAllSchools() {
-		List<SchoolDTO> schoolDTOs = schoolService.getAllSchools();
+		List<SchoolDTO> schoolDTOs = schoolService.getSchools();
 		
 		if (schoolDTOs != null) {
 			return new ResponseEntity<>(schoolDTOs, HttpStatus.OK);
@@ -47,18 +47,18 @@ public class SchoolController {
 	}
 	
 	// 학교 계정 삭제 
-	@DeleteMapping("/school/{schoolId}")
-	public ResponseEntity<Void> deleteSchool (@PathVariable Long schoolId){
-		return schoolService.deleteSchoolById(schoolId) ?
+	@DeleteMapping("/school/{schoolName}")
+	public ResponseEntity<Void> deleteSchool (@PathVariable("schoolName") String schoolName){
+		return schoolService.deleteBySchoolname(schoolName) ?
 			       new ResponseEntity<>(null, HttpStatus.OK) :
 			       new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	}
 
-	// 학교 계정 정 
-	@PutMapping("/school/{schoolId}")
-	public ResponseEntity<Void> updateSchool (@PathVariable Long schoolId, @RequestBody SchoolDTO schoolDto){
-		return schoolService.updateSchool(schoolId,schoolDto) ?
-			       new ResponseEntity<>(null, HttpStatus.OK) :
-			       new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-	}
+//	// 학교 계정 수정
+//	@PutMapping("/school/{schoolName}")
+//	public ResponseEntity<Void> updateSchool (@PathVariable("schoolName") String schoolName, @RequestBody SchoolDTO schoolDto){
+//		return schoolService.updateSchool(schoolName,schoolDto) ?
+//			       new ResponseEntity<>(null, HttpStatus.OK) :
+//			       new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+//	}
 }

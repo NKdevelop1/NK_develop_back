@@ -9,12 +9,12 @@ public interface StudentService {
 	
 	public boolean createStudent(StudentDTO studentDTO);
 	
-    public boolean deleteStudentById(Long id);
+    public boolean deleteByUsername(String username);
 
-	public boolean updateStudent(Long id, StudentDTO studentDTO);
+	public boolean updateStudent(String username, StudentDTO studentDTO);
 	
-    public List<StudentDTO> getAllStudents();
+    public List<StudentDTO> getStudents();
     
-	public StudentDTO getStudentById(Long id);
+	public StudentDTO findByUsername(String username);
 
 }

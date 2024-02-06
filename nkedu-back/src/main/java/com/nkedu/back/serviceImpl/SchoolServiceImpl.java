@@ -2,6 +2,7 @@ package com.nkedu.back.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -36,9 +37,9 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 
 	// 등록된 학교 삭제
-	public boolean deleteSchoolById(Long schoolId) {
+	public boolean deleteBySchoolname(String schoolName) {
 		try{
-			schoolRepository.deleteById(schoolId);
+			schoolRepository.delete(schoolRepository.findOneBySchoolName(schoolName).get());
 
 			return true;
 		} catch (Exception e) {
@@ -48,28 +49,30 @@ public class SchoolServiceImpl implements SchoolService{
 	}
 
 	// 등록된 학교 수정
-	public boolean updateSchool(Long schoolId, SchoolDTO schoolDTO) {
-		try {
-			School searchedSchool = schoolRepository.findById(schoolId).get();
-
-			if(ObjectUtils.isEmpty(searchedSchool))
-				return false;
-
-			// 요청 받은 학교 이름으로 업데이트
-			if(!ObjectUtils.isEmpty(schoolDTO.getSchoolName()))
-				searchedSchool.setSchoolName(schoolDTO.getSchoolName());
-
-			schoolRepository.save(searchedSchool);
-			return true;
-		} catch (Exception e) {
-			log.info("[Failed] e : " + e.getMessage());
-		}
-		return false;
-	}
+	// schoolName : 본체
+	// schoolDTO  : 바꿀 이름
+//	public boolean updateSchool(String schoolName, SchoolDTO schoolDTO) {
+//		try {
+//			School searchedSchool = schoolRepository.findOneBySchoolName(schoolName).get();
+//
+//			if(ObjectUtils.isEmpty(searchedSchool))
+//				return false;
+//
+//			// 요청 받은 학교 이름으로 업데이트
+//			if(!ObjectUtils.isEmpty(schoolDTO.getSchoolName()))
+//				searchedSchool.setSchoolName(schoolDTO.getSchoolName());
+//
+//			schoolRepository.save(searchedSchool);
+//			return true;
+//		} catch (Exception e) {
+//			log.info("[Failed] e : " + e.getMessage());
+//		}
+//		return false;
+//	}
 
 
 	// 등록된 모든 학교 리스트 조회
-	public List<SchoolDTO> getAllSchools() {
+	public List<SchoolDTO> getSchools() {
 		try {
 			List<SchoolDTO> schoolDTOs = new ArrayList<>();
 
@@ -77,8 +80,7 @@ public class SchoolServiceImpl implements SchoolService{
 
 			for(School school : schools) {
 				SchoolDTO schoolDTO = new SchoolDTO();
-
-				schoolDTO.setId(school.getId());
+				//schoolDTO.setId(school.getId());
 				schoolDTO.setSchoolName(school.getSchoolName());
 
 				schoolDTOs.add(schoolDTO);
