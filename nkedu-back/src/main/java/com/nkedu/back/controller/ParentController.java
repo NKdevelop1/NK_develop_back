@@ -23,12 +23,12 @@ import lombok.RequiredArgsConstructor;
 
 //@Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/parent")
+@RequestMapping("/api")
 @RestController
 public class ParentController {
 	private final ParentService parentService;
 	
-	@GetMapping
+	@GetMapping("/parent")
 	public ResponseEntity<List<ParentDto>> getParents() {
 		List<ParentDto> parentDtos = parentService.getParents();
 		
@@ -39,7 +39,7 @@ public class ParentController {
 		}
 	}
 	
-	@GetMapping("/{username}")
+	@GetMapping("/parent/{username}")
 	public ResponseEntity<ParentDto> getParent(@PathVariable("username") String username) {
 		// 본인 혹은 관리자만 열람 가능하도록 토큰 필요
 		
@@ -52,7 +52,7 @@ public class ParentController {
 		}
 	}
 	
-	@PutMapping("/{username}")
+	@PutMapping("/parent/{username}")
 	public ResponseEntity<Void> updateParent(@PathVariable("username") String username, @RequestBody ParentDto parentDto) {
 		// 토큰 필요
 		
@@ -65,7 +65,7 @@ public class ParentController {
 		}
 	}
 	
-	@PostMapping
+	@PostMapping("/parent")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Void> createParent(@Validated @RequestBody ParentDto parentDto) {
 		
@@ -78,7 +78,7 @@ public class ParentController {
 		}
 	}
 	
-	@DeleteMapping("/{username}")
+	@DeleteMapping("/parent/{username}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Void> deleteParent(@PathVariable("username") String username) {
 		// 토큰 필요

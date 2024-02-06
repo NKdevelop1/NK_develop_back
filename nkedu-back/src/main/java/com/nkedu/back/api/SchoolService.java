@@ -8,9 +8,9 @@ public interface SchoolService {
 
 	public boolean createSchool(SchoolDTO schoolDTO);
 	
-    public boolean deleteSchoolById(Long id);
+    public boolean deleteBySchoolname(String schoolName);
 
-	public boolean updateSchool(Long id, SchoolDTO schoolDTO);
+//	public boolean updateSchool(String schoolName, SchoolDTO schoolDTO);
 	
-    public List<SchoolDTO> getAllSchools();
+    public List<SchoolDTO> getSchools();
 }
