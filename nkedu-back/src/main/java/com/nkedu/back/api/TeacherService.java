@@ -3,7 +3,7 @@ package com.nkedu.back.api;
 import java.util.List;
 
 import com.nkedu.back.entity.Teacher;
-import com.nkedu.back.model.TeacherDTO;
+import com.nkedu.back.dto.TeacherDTO;
 
 public interface TeacherService {
 
