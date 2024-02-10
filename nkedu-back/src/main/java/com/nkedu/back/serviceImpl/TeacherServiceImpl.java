@@ -16,7 +16,7 @@ import org.springframework.util.ObjectUtils;
 
 import com.nkedu.back.api.TeacherService;
 import com.nkedu.back.entity.Teacher;
-import com.nkedu.back.model.TeacherDTO;
+import com.nkedu.back.dto.TeacherDTO;
 import com.nkedu.back.repository.TeacherRepository;
 
 @Slf4j

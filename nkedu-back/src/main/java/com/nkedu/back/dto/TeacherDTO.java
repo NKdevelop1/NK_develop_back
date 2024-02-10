@@ -1,4 +1,4 @@
-package com.nkedu.back.model;
+package com.nkedu.back.dto;
 
 import java.sql.Date;
 
