@@ -36,10 +36,9 @@
 
 - 프론트와의 협업을 위한 도커 이미지 제공
   1. `cd nkedu-back`
-  2. `.\gradlew.bat build` (윈도우) / `./gradlew build` (맥북 M1 / 리눅스)
-  3. `docker build . -t nkedu-back` / `docker build . -t nkedu-back --platform linux/arm64` (맥북 M1 의 경우)
-  4. `docker run -p 8080:8080 -v ${pwd}:/workspace nkedu-back`
-  5. `http://localhost:8080/` 링크를 바탕으로 테스트용 백엔드 서버 활용 가능
+  2. `.\gradlew.bat clean build` (윈도우) / `./gradlew clean build` (맥북 M1 / 리눅스)
+  3. `docker-compose up`
+  4. `http://localhost:8080/` 링크를 바탕으로 테스트용 백엔드 서버 활용 가능
 
 - 깃허브 관리
   - `develop` 브랜치를 바탕으로 기능마다 새로운 브랜치를 만들어 개발을 진행한다.
