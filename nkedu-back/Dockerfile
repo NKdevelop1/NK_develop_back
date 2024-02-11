@@ -1,9 +1,7 @@
 FROM openjdk:17-alpine
 
-WORKDIR /workspace
+ARG JAR_FILE=build/libs/*.jar
 
-ARG JAR_PATH=./build/libs
+COPY ${JAR_FILE} app.jar
 
-COPY ${JAR_PATH}/nkedu-back-0.0.1.jar ${JAR_PATH}/nkedu-back-0.0.1.jar
-
-CMD ["java", "-jar", "./build/libs/nkedu-back-0.0.1.jar"]
+ENTRYPOINT ["java","-jar","/app.jar"]
