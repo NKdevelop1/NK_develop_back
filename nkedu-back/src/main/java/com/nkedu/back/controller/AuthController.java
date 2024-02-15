@@ -35,6 +35,12 @@ public class AuthController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
+    /**
+     * 별도의 Service 로의 연결은 없고 Spring Security 의 로그인 과정을 처리해주는 Controller 코드입니다.
+     * 
+     * @author DevTae
+     */
+    
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken =

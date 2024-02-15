@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,8 +15,14 @@ import org.springframework.util.ObjectUtils;
 import com.nkedu.back.api.ParentService;
 import com.nkedu.back.entity.Authority;
 import com.nkedu.back.entity.Parent;
+import com.nkedu.back.entity.ParentOfStudent;
+import com.nkedu.back.entity.ParentOfStudent.Relationship;
 import com.nkedu.back.dto.ParentDto;
+import com.nkedu.back.dto.ParentOfStudentDTO;
+import com.nkedu.back.dto.StudentDTO;
+import com.nkedu.back.repository.ParentOfStudentRepository;
 import com.nkedu.back.repository.ParentRepository;
+import com.nkedu.back.repository.StudentRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +33,16 @@ import lombok.extern.slf4j.Slf4j;
 public class ParentServiceImpl implements ParentService {
 
 	private final ParentRepository parentRepository;
+	private final StudentRepository studentRepository;
+	private final ParentOfStudentRepository parentOfStudentRepository;
 	private final PasswordEncoder passwordEncoder;
 
+	
+	/**
+	 * 부모 엔티티 CRUD 관련 API 구현 코드입니다.
+	 * @author DevTae
+	 */
+	
 	@Override
 	public boolean createParent(ParentDto parentDto) {
 		try{
@@ -155,6 +170,97 @@ public class ParentServiceImpl implements ParentService {
 		}
 
 		return null;
+	}
+
+	
+	/**
+	 * 학생 및 부모 사이의 관계 정의를 위한 서비스 구현 코드입니다.
+	 * 
+	 * @author DevTae
+	 */
+	
+	@Override
+	public ParentOfStudentDTO createParentOfStudent(ParentOfStudentDTO parentOfStudentDTO) {
+		
+		try {
+			String parentname = parentOfStudentDTO.getParentDTO().getUsername();
+			String studentname = parentOfStudentDTO.getStudentDTO().getUsername();
+			Relationship relationship = parentOfStudentDTO.getRelationship();
+			
+			Optional<ParentOfStudent> optionalParentOfStudent = parentOfStudentRepository.findOneByParentnameAndStudentname(parentname, studentname);
+				
+			// 중복 등록 방지를 위한 조건문
+			if (!ObjectUtils.isEmpty(optionalParentOfStudent)) {
+				log.info("[Failed] Duplicated ParentOfStudent record occured. Skip it.");
+				return null;
+			}
+			
+			ParentOfStudent parentOfStudent = ParentOfStudent.builder()
+								.parent(parentRepository.findOneByUsername(parentname).get())
+								.student(studentRepository.findOneByUsername(studentname).get())
+								.relationship(relationship)
+								.build();
+			
+			parentOfStudentRepository.save(parentOfStudent);
+			
+			return parentOfStudentDTO;
+			
+		} catch (Exception e) {
+			log.info("[Failed] e : " + e.getMessage());
+		}
+		
+		return null;
+	}
+
+	@Override
+	public List<ParentOfStudentDTO> getParentOfStudentsByParentname(String parentname) {
+
+		try {
+			List<ParentOfStudent> parentOfStudents = parentOfStudentRepository.findAllByParentname(parentname).get();
+
+			List<ParentOfStudentDTO> parentOfStudentDTOs = new ArrayList<>();
+			
+			for(ParentOfStudent parentOfStudent : parentOfStudents) {
+				String parentname_each = parentOfStudent.getParent().getUsername();
+				String studentname_each = parentOfStudent.getStudent().getUsername();
+				Relationship relationship = parentOfStudent.getRelationship();
+				
+				ParentOfStudentDTO parentOfStudentDTO = ParentOfStudentDTO.builder()
+															.parentDTO(ParentDto.builder().username(parentname_each).build())
+															.studentDTO(StudentDTO.builder().username(studentname_each).build())
+															.relationship(relationship)
+															.build();
+				
+				parentOfStudentDTOs.add(parentOfStudentDTO);
+			}
+			
+			return parentOfStudentDTOs;
+			
+		} catch (Exception e) {
+			log.info("[Failed] e : " + e.getMessage());
+		}
+		
+		return null;
+	}
+
+	@Override
+	public boolean deleteParentOfStudent(ParentOfStudentDTO parentOfStudentDTO) {
+		
+		try {
+			String parentname = parentOfStudentDTO.getParentDTO().getUsername();
+			String studentname = parentOfStudentDTO.getStudentDTO().getUsername();
+			
+			ParentOfStudent parentOfStudent = parentOfStudentRepository.findOneByParentnameAndStudentname(parentname, studentname).get();
+			
+			parentOfStudentRepository.delete(parentOfStudent);
+			
+			return true;
+			
+		} catch (Exception e) {
+			log.info("[Failed] e : " + e.getMessage());
+		}
+		
+		return false;
 	}
 
 }

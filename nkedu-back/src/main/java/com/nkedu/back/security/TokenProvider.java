@@ -30,6 +30,14 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
+/**
+ * JWT 시스템 구현을 위한 TokenProvider 클래스 구현 코드입니다.
+ * application.yml 에서의 jwt 옵션을 바탕으로 디테일한 옵션 수정이 가능합니다.
+ * Refresh Token 과 Access Token 을 제공하며, 장기간의 Refresh Token 을 바탕으로 Access Token 을 발행하도록 구현하였습니다.
+ * 
+ * @author devtae
+ */
+
 @Component
 public class TokenProvider implements InitializingBean {
 
