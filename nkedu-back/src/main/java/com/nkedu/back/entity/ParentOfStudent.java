@@ -1,12 +1,14 @@
 package com.nkedu.back.entity;
 
-import org.springframework.data.annotation.Id;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -16,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+@Entity
 @Table(name="parent_of_student")
 @Setter
 @Getter
@@ -37,7 +40,16 @@ public class ParentOfStudent {
 	@JoinColumn(name="student_id")
 	private Student student;
 	
-	@Column(name="relationship", length=10)
-	private String relationship;
-	
+	@Enumerated(EnumType.STRING)
+	@Column(name="relationship")
+	private Relationship relationship;
+
+	// 학생과의 관계에 대하여 enum 으로 정의
+	public enum Relationship {
+		FATHER,
+		MOTHER,
+		GRANDFATHER,
+		GRANDMOTHER,
+		NOK; // Next-Of-Kin
+	}
 }
