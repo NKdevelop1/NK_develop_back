@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nkedu.back.api.ParentService;
-import com.nkedu.back.dto.ParentDto;
+import com.nkedu.back.dto.ParentDTO;
 import com.nkedu.back.dto.ParentOfStudentDTO;
 import com.nkedu.back.dto.RelationshipDTO;
 import com.nkedu.back.dto.StudentDTO;
@@ -38,33 +38,33 @@ public class ParentController {
 	private final ParentService parentService;
 	
 	@GetMapping("/parent")
-	public ResponseEntity<List<ParentDto>> getParents() {
-		List<ParentDto> parentDtos = parentService.getParents();
+	public ResponseEntity<List<ParentDTO>> getParents() {
+		List<ParentDTO> parentDTOs = parentService.getParents();
 		
-		if (parentDtos != null) {
-			return new ResponseEntity<>(parentDtos, HttpStatus.OK);
+		if (parentDTOs != null) {
+			return new ResponseEntity<>(parentDTOs, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST); 
 		}
 	}
 	
 	@GetMapping("/parent/{username}")
-	public ResponseEntity<ParentDto> getParent(@PathVariable("username") String username) {
+	public ResponseEntity<ParentDTO> getParent(@PathVariable("username") String username) {
 		// 본인 혹은 관리자만 열람 가능하도록 토큰 필요
+
+		ParentDTO parentDTO = parentService.findByUsername(username);
 		
-		ParentDto parentDto = parentService.findByUsername(username);
-		
-		if (parentDto != null) {
-			return new ResponseEntity<>(parentDto, HttpStatus.OK);
+		if (parentDTO != null) {
+			return new ResponseEntity<>(parentDTO, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 	
 	@PutMapping("/parent/{username}")
-	public ResponseEntity<Void> updateParent(@PathVariable("username") String username, @RequestBody ParentDto parentDto) {
+	public ResponseEntity<Void> updateParent(@PathVariable("username") String username, @RequestBody ParentDTO parentDTO) {
 
-		boolean result = parentService.updateParent(username, parentDto);
+		boolean result = parentService.updateParent(username, parentDTO);
 		
 		if (result == true) {
 			return new ResponseEntity<>(null, HttpStatus.OK);
@@ -75,9 +75,9 @@ public class ParentController {
 	
 	@PostMapping("/parent")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ResponseEntity<Void> createParent(@Validated @RequestBody ParentDto parentDto) {
+	public ResponseEntity<Void> createParent(@Validated @RequestBody ParentDTO parentDTO) {
 		
-		boolean result = parentService.createParent(parentDto);
+		boolean result = parentService.createParent(parentDTO);
 		
 		if (result == true) {
 			return new ResponseEntity<>(null, HttpStatus.OK);
@@ -120,7 +120,7 @@ public class ParentController {
 																	@Valid @RequestBody RelationshipDTO relationshipDTO) {
 		
 		ParentOfStudentDTO parentOfStudentDTO = ParentOfStudentDTO.builder()
-												.parentDTO(ParentDto.builder().username(parentname).build())
+												.parentDTO(ParentDTO.builder().username(parentname).build())
 												.studentDTO(StudentDTO.builder().username(studentname).build())
 												.relationship(relationshipDTO.getRelationship())
 												.build();
@@ -140,7 +140,7 @@ public class ParentController {
 	public ResponseEntity<Void> deleteParentOfStudent(@PathVariable("parentname") String parentname,
 												      @PathVariable("studentname") String studentname) {
 		boolean result = parentService.deleteParentOfStudent(ParentOfStudentDTO.builder()
-															 .parentDTO(ParentDto.builder().username(parentname).build())
+															 .parentDTO(ParentDTO.builder().username(parentname).build())
 															 .studentDTO(StudentDTO.builder().username(studentname).build())
 															 .build());
 							

@@ -2,17 +2,17 @@ package com.nkedu.back.api;
 
 import java.util.List;
 
-import com.nkedu.back.dto.ParentDto;
+import com.nkedu.back.dto.ParentDTO;
 import com.nkedu.back.dto.ParentOfStudentDTO;
 
 public interface ParentService {
 
 	/**
 	 * 부모님 계정 생성
-	 * @param parentDto
+	 * @param parentDTO
 	 * @return Parent
 	 */
-	public boolean createParent(ParentDto parentDto);
+	public boolean createParent(ParentDTO parentDTO);
 
 	/**
 	 * 부모님 계정 삭제
@@ -22,27 +22,27 @@ public interface ParentService {
 	
 	/**
 	 * 부모님 계정 설정
-	 * @param parent
+	 * @param parentDTO
 	 * @return boolean
 	 */
-	public boolean updateParent(String username, ParentDto parentDto);
+	public boolean updateParent(String username, ParentDTO parentDTO);
 
 	/**
 	 * 부모님 계정 리스트 조회
 	 * @return List<Parent>
 	 */
-	public List<ParentDto> getParents();
+	public List<ParentDTO> getParents();
 
 	/**
 	 * 부모님 계정 정보 조회
 	 * @param username
-	 * @return ParentDto
+	 * @return ParentDTO
 	 */
-	public ParentDto findByUsername(String username);
+	public ParentDTO findByUsername(String username);
 
 	/**
 	 * 부모님 계정에 속한 학생 추가
-	 * @param parentname, studentname
+	 * @param parentname, student-name
 	 * @return ParentOfStudent
 	 */
 	public ParentOfStudentDTO createParentOfStudent(ParentOfStudentDTO parentOfStudentDTO);

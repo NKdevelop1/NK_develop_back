@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nkedu.back.dto.LoginDto;
-import com.nkedu.back.dto.RefreshTokenDto;
-import com.nkedu.back.dto.TokenDto;
+import com.nkedu.back.dto.LoginDTO;
+import com.nkedu.back.dto.RefreshTokenDTO;
+import com.nkedu.back.dto.TokenDTO;
 import com.nkedu.back.security.TokenProvider;
 
 import jakarta.validation.Valid;
@@ -42,16 +42,16 @@ public class AuthController {
      */
     
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<TokenDTO> login(@Valid @RequestBody LoginDTO loginDTO) {
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
+                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
         
         // authenticate 메소드가 실행이 될 때 CustomUserDetailsService class의 loadUserByUsername 메소드가 실행
         Authentication authentication = null;
         try {
         	authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         } catch (UsernameNotFoundException e) {
-        	logger.debug("login failed. " + loginDto.getUsername());
+        	logger.debug("login failed. " + loginDTO.getUsername());
         	return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
@@ -64,19 +64,19 @@ public class AuthController {
         // refresh token 을 바탕으로 access token 생성
         String accessToken = tokenProvider.createAccessToken(refreshToken);
 
-        return new ResponseEntity<>(new TokenDto(refreshToken, accessToken), HttpStatus.OK);
+        return new ResponseEntity<>(new TokenDTO(refreshToken, accessToken), HttpStatus.OK);
     }
     
     @PostMapping("/refresh")
-    public ResponseEntity<TokenDto> refresh(@Valid @RequestBody RefreshTokenDto refreshTokenDto) {
+    public ResponseEntity<TokenDTO> refresh(@Valid @RequestBody RefreshTokenDTO refreshTokenDTO) {
         
-    	String accessToken = tokenProvider.createAccessToken(refreshTokenDto.getRefreshToken());
+    	String accessToken = tokenProvider.createAccessToken(refreshTokenDTO.getRefreshToken());
     	
     	if (accessToken == null) {
     		return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);    		
     	}
     	
-    	return new ResponseEntity<>(new TokenDto(refreshTokenDto.getRefreshToken(), accessToken), HttpStatus.OK);
+    	return new ResponseEntity<>(new TokenDTO(refreshTokenDTO.getRefreshToken(), accessToken), HttpStatus.OK);
     }
     
     // 로그인 체크

@@ -17,7 +17,7 @@ import com.nkedu.back.entity.Authority;
 import com.nkedu.back.entity.Parent;
 import com.nkedu.back.entity.ParentOfStudent;
 import com.nkedu.back.entity.ParentOfStudent.Relationship;
-import com.nkedu.back.dto.ParentDto;
+import com.nkedu.back.dto.ParentDTO;
 import com.nkedu.back.dto.ParentOfStudentDTO;
 import com.nkedu.back.dto.StudentDTO;
 import com.nkedu.back.repository.ParentOfStudentRepository;
@@ -44,13 +44,13 @@ public class ParentServiceImpl implements ParentService {
 	 */
 	
 	@Override
-	public boolean createParent(ParentDto parentDto) {
+	public boolean createParent(ParentDTO parentDTO) {
 		try{
-	        if (!ObjectUtils.isEmpty(parentRepository.findOneByUsername(parentDto.getUsername()))) {
+	        if (!ObjectUtils.isEmpty(parentRepository.findOneByUsername(parentDTO.getUsername()))) {
 	            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
 	        }
 	
-	        System.out.println("getUserName: " + parentDto.getUsername());
+	        System.out.println("getUserName: " + parentDTO.getUsername());
 	        
 	        Set<Authority> authorities = new HashSet<Authority>();
 	        
@@ -65,11 +65,11 @@ public class ParentServiceImpl implements ParentService {
 	        authorities.add(authority_parent);
 	
 	        Parent parent = (Parent) Parent.builder()
-	                .username(parentDto.getUsername())
-	                .password(passwordEncoder.encode(parentDto.getPassword()))
-	                .nickname(parentDto.getNickname())
-	                .birth(parentDto.getBirth())
-	                .phoneNumber(parentDto.getPhoneNumber())
+	                .username(parentDTO.getUsername())
+	                .password(passwordEncoder.encode(parentDTO.getPassword()))
+	                .nickname(parentDTO.getNickname())
+	                .birth(parentDTO.getBirth())
+	                .phoneNumber(parentDTO.getPhoneNumber())
 	                .authorities(authorities)
 	                .created(new Timestamp(System.currentTimeMillis()))
 	                .activated(true)
@@ -96,23 +96,23 @@ public class ParentServiceImpl implements ParentService {
 	}
 
 	@Override
-	public boolean updateParent(String username, ParentDto parentDto) {
+	public boolean updateParent(String username, ParentDTO parentDTO) {
 		try {
 			Parent searchedParent = parentRepository.findOneByUsername(username).get();
 			
 			if(ObjectUtils.isEmpty(searchedParent))
 				return false;
 			
-			if(!ObjectUtils.isEmpty(parentDto.getUsername()))
-				searchedParent.setUsername(parentDto.getUsername());
-			if(!ObjectUtils.isEmpty(parentDto.getPassword()))
-				searchedParent.setPassword(parentDto.getPassword());
-			if(!ObjectUtils.isEmpty(parentDto.getNickname()))
-				searchedParent.setNickname(parentDto.getNickname());
-			if(!ObjectUtils.isEmpty(parentDto.getPhoneNumber()))
-				searchedParent.setPhoneNumber(parentDto.getPhoneNumber());	
-			if(!ObjectUtils.isEmpty(parentDto.getBirth()))
-				searchedParent.setBirth(parentDto.getBirth());
+			if(!ObjectUtils.isEmpty(parentDTO.getUsername()))
+				searchedParent.setUsername(parentDTO.getUsername());
+			if(!ObjectUtils.isEmpty(parentDTO.getPassword()))
+				searchedParent.setPassword(parentDTO.getPassword());
+			if(!ObjectUtils.isEmpty(parentDTO.getNickname()))
+				searchedParent.setNickname(parentDTO.getNickname());
+			if(!ObjectUtils.isEmpty(parentDTO.getPhoneNumber()))
+				searchedParent.setPhoneNumber(parentDTO.getPhoneNumber());
+			if(!ObjectUtils.isEmpty(parentDTO.getBirth()))
+				searchedParent.setBirth(parentDTO.getBirth());
 			
 			parentRepository.save(searchedParent);
 			
@@ -125,24 +125,24 @@ public class ParentServiceImpl implements ParentService {
 	}
 
 	@Override
-	public List<ParentDto> getParents() {
+	public List<ParentDTO> getParents() {
 		try {
-			List<ParentDto> parentDtos = new ArrayList<>();
+			List<ParentDTO> parentDTOs = new ArrayList<>();
 			
 			List<Parent> parents = parentRepository.findAll();
 			
 			for(Parent parent : parents) {
-				ParentDto parentDto = new ParentDto();
-				parentDto.setId(parent.getId());
-				parentDto.setUsername(parent.getUsername());
-				parentDto.setNickname(parent.getNickname());
-				parentDto.setPhoneNumber(parent.getPhoneNumber());
-				parentDto.setBirth(parent.getBirth());
-				
-				parentDtos.add(parentDto);
+				ParentDTO parentDTO = new ParentDTO();
+				parentDTO.setId(parent.getId());
+				parentDTO.setUsername(parent.getUsername());
+				parentDTO.setNickname(parent.getNickname());
+				parentDTO.setPhoneNumber(parent.getPhoneNumber());
+				parentDTO.setBirth(parent.getBirth());
+
+				parentDTOs.add(parentDTO);
 			}
 			
-			return parentDtos;
+			return parentDTOs;
 		} catch(Exception e) {
 			log.info("[Failed] e : " + e.getMessage());
 		}
@@ -151,19 +151,19 @@ public class ParentServiceImpl implements ParentService {
 	}
 
 	@Override
-	public ParentDto findByUsername(String username) {
+	public ParentDTO findByUsername(String username) {
 		
 		try {
 			Parent parent = parentRepository.findOneByUsername(username).get();
+
+			ParentDTO parentDTO = new ParentDTO();
+			parentDTO.setId(parent.getId());
+			parentDTO.setUsername(parent.getUsername());
+			parentDTO.setNickname(parent.getNickname());
+			parentDTO.setPhoneNumber(parent.getPhoneNumber());
+			parentDTO.setBirth(parent.getBirth());
 			
-			ParentDto parentDto = new ParentDto();
-			parentDto.setId(parent.getId());
-			parentDto.setUsername(parent.getUsername());
-			parentDto.setNickname(parent.getNickname());
-			parentDto.setPhoneNumber(parent.getPhoneNumber());
-			parentDto.setBirth(parent.getBirth());
-			
-			return parentDto;
+			return parentDTO;
 			
 		} catch (Exception e) {
 			log.info("[Failed] e : " + e.getMessage());
@@ -226,7 +226,7 @@ public class ParentServiceImpl implements ParentService {
 				Relationship relationship = parentOfStudent.getRelationship();
 				
 				ParentOfStudentDTO parentOfStudentDTO = ParentOfStudentDTO.builder()
-															.parentDTO(ParentDto.builder().username(parentname_each).build())
+															.parentDTO(ParentDTO.builder().username(parentname_each).build())
 															.studentDTO(StudentDTO.builder().username(studentname_each).build())
 															.relationship(relationship)
 															.build();

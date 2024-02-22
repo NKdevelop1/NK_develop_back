@@ -13,7 +13,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginDto {
+public class LoginDTO {
 
     @NotNull
     @Size(min = 3, max = 50)

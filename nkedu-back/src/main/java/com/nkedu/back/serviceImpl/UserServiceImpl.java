@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.nkedu.back.api.UserService;
 import com.nkedu.back.entity.Authority;
 import com.nkedu.back.entity.User;
-import com.nkedu.back.dto.UserDto;
+import com.nkedu.back.dto.UserDTO;
 import com.nkedu.back.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,22 +26,22 @@ public class UserServiceImpl implements UserService{
 
     // user 에 대한 signup 은 deprecated 될 예정.
     @Transactional
-    public boolean signup(UserDto userDto) {
+    public boolean signup(UserDTO userDTO) {
         try{
-	        if (ObjectUtils.isNotEmpty(userRepository.findOneByUsername(userDto.getUsername()).get())) {
+	        if (ObjectUtils.isNotEmpty(userRepository.findOneByUsername(userDTO.getUsername()).get())) {
 	            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
 	        }
 
-	        System.out.println(userDto.getUsername());
+	        System.out.println(userDTO.getUsername());
 	        
 	        Authority authority = Authority.builder()
 	                .authorityName("ROLE_USER")
 	                .build();
 
 	        User user = User.builder()
-	                .username(userDto.getUsername())
-	                .password(passwordEncoder.encode(userDto.getPassword()))
-	                .nickname(userDto.getNickname())
+	                .username(userDTO.getUsername())
+	                .password(passwordEncoder.encode(userDTO.getPassword()))
+	                .nickname(userDTO.getNickname())
 	                .authorities(Collections.singleton(authority))
 	                .activated(true)
 	                .build();

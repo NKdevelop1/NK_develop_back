@@ -42,10 +42,10 @@ public class TeacherController {
     public ResponseEntity<TeacherDTO> getTeacher(@PathVariable("username") String username) {
         // 토큰 필요
 
-        TeacherDTO TeacherDTO = teacherService.findByUsername(username);
+        TeacherDTO teacherDTO = teacherService.findByUsername(username);
 
-        if (TeacherDTO != null) {
-            return new ResponseEntity<>(TeacherDTO, HttpStatus.OK);
+        if (teacherDTO != null) {
+            return new ResponseEntity<>(teacherDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

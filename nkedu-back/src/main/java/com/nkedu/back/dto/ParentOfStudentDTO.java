@@ -17,7 +17,7 @@ import lombok.Setter;
 public class ParentOfStudentDTO {
 	
 	@JsonProperty(value="parent")
-	private ParentDto parentDTO;
+	private ParentDTO parentDTO;
 	
 	@JsonProperty(value="student")
 	private StudentDTO studentDTO;
