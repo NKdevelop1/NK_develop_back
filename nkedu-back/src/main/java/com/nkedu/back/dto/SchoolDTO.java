@@ -12,8 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SchoolDTO {
-	
-	private Long id;
-	
+
 	private String schoolName;
 }
