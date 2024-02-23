@@ -31,9 +31,10 @@ public class StudentOfClassroom {
     @JoinColumn(name = "classroom_id")
     private Classroom classroom;
 
-    @Column(name="rate", nullable=false)
-    private Long rate;
-
-    @Column(name="content", length=1000, nullable=false)
-    private String content;
+//    추후 개발 예정 by 시우님
+//    @Column(name="rate", nullable=false)
+//    private Long rate;
+//
+//    @Column(name="content", length=1000, nullable=false)
+//    private String content;
 }
