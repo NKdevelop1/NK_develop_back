@@ -242,6 +242,27 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
+    public boolean updateTeacherOfClassroom(TeacherOfClassroomDTO teacherOfClassroomDTO){
+        try{
+            Long classroom_id = teacherOfClassroomDTO.getClassroomDTO().getId();
+            Long teacher_id = teacherOfClassroomDTO.getTeacherDTO().getId();
+
+            TeacherOfClassroom searchedTeacherOfClassroom = teacherOfClassroomRepository.findOneByClassroomIdAndTeacherId(classroom_id,teacher_id).get();
+
+            if(ObjectUtils.isEmpty(searchedTeacherOfClassroom))
+                return false;
+            if(!ObjectUtils.isEmpty(teacherOfClassroomDTO.isType()))
+                searchedTeacherOfClassroom.setType(teacherOfClassroomDTO.isType());
+
+            teacherOfClassroomRepository.save(searchedTeacherOfClassroom);
+            return true;
+        }catch (Exception e) {
+            log.info("[Failed] e : " + e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
     public boolean deleteTeacherOfClassroom(TeacherOfClassroomDTO teacherOfClassroomDTO) {
 
         try{

@@ -99,4 +99,12 @@ public interface ClassroomService {
      */
     public boolean deleteTeacherOfClassroom(TeacherOfClassroomDTO teacherOfClassroomDTO);
 
+    /**
+     * 수업에 속한 선생님 수정 (정/부)
+     * @param teacherOfClassroomDTO
+     * @return boolean
+     * @author beom-i
+     */
+    public boolean updateTeacherOfClassroom(TeacherOfClassroomDTO teacherOfClassroomDTO);
+
 }

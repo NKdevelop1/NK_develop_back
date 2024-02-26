@@ -181,7 +181,7 @@ public class ClassroomController {
 
     /**
      * 수업에 선생님을 추가할 수 있는 controller 입니다.
-     * @param classroom_id teacher_id
+     * @param classroom_id teacher_id type
      *
      * @author beom-i
      */
@@ -207,9 +207,31 @@ public class ClassroomController {
     }
 
     /**
-     * 수업에 특정 학생을 삭제하는 Controller 입니다.
+     * 특정 수업에 속한 선생님의 정/부를 변경하는 Controller 입니다.
+     * @param classroom_id teacher_id type
+     * @return boolean
+     * @author beom-i
+     */
+    @PutMapping("/classroom/{classroom_id}/teacher/{teacher_id}")
+    public ResponseEntity<List<TeacherOfClassroomDTO>> updateTeacherOfClassrooms(@PathVariable("classroom_id") Long classroom_id,
+                                                                                 @PathVariable("teacher_id") Long teacher_id,
+                                                                                 @RequestParam("type") boolean type){
+        boolean result = classroomService.updateTeacherOfClassroom(TeacherOfClassroomDTO.builder()
+                .classroomDTO(ClassroomDTO.builder().id(classroom_id).build())
+                .teacherDTO(TeacherDTO.builder().id(teacher_id).build())
+                .type(type).build());
+
+        if (result == true) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 수업에 특정 선생님을 삭제하는 Controller 입니다.
      * @param classroom_id teacher_id
-     *
+     * @return boolean
      * @author beom-i
      */
     @DeleteMapping("/classroom/{classroom_id}/teacher/{teacher_id}")

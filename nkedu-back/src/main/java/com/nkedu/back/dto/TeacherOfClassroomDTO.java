@@ -13,8 +13,9 @@ public class TeacherOfClassroomDTO {
     @JsonProperty(value="classroom")
     private ClassroomDTO classroomDTO;
 
-    @JsonProperty(value="student")
+    @JsonProperty(value="teacher")
     private TeacherDTO teacherDTO;
 
     private boolean type;
+
 }
