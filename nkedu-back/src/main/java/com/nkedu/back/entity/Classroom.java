@@ -24,6 +24,6 @@ public class Classroom {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
     private Long id;
 
-    @Column(name="content", length=40, nullable=false)
-    private String content;
+    @Column(name="classname", length=40, nullable=false)
+    private String classname;
 }

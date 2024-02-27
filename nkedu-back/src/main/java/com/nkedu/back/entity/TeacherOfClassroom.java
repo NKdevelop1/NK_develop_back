@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TeacherOfClass {
+public class TeacherOfClassroom {
 
     @Id
     @Column(name="id")
