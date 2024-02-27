@@ -15,12 +15,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Classroom {
 
     @Id
-    @Column(name="classroom_id")
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
     private Long id;
 
