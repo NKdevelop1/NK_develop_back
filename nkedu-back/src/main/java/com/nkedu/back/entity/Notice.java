@@ -45,7 +45,7 @@ public class Notice {
     @Column(name="created", nullable=false)
     private Timestamp created;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name="notice_type",nullable = false)
     private NoticeType noticeType;
 

@@ -54,6 +54,7 @@ public class SecurityConfig {
 						.requestMatchers("/api/teacher/**").permitAll()
 						.requestMatchers("/api/school/**").permitAll()
 						.requestMatchers("/api/classroom/**").permitAll()
+						.requestMatchers("/api/notice/**").permitAll()
 
 						// favicon.ico 파일
 						.requestMatchers("/favicon.ico").permitAll()
