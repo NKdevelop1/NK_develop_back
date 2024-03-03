@@ -54,7 +54,7 @@ public class HomeworkOfStudent {
 	@Column(name="status")
 	private Status status;
 	
-	// 한 숙제에 여러 
+	// 한 숙제에 여러 파일이 들어갈 수 있도록 JoinTable 설정
 	@ManyToMany
 	@JoinTable(
 			name="homework_of_student_of_file",
@@ -68,8 +68,8 @@ public class HomeworkOfStudent {
 	
 	// 숙제 상태 enum 제공
 	public enum Status {
-		EMPTY, // 아무런 진행 상태 없음
-		SUBMITTED, // 제출 완료 (선생님 검토 필요)
+		TODO, // 아무런 진행 상태 없음
+		SUBMIT, // 제출 완료 (선생님 검토 필요)
 		COMPLETE, // 숙제 완료
 		REJECT // 반려 상태
 	}

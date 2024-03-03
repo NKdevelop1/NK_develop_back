@@ -35,7 +35,7 @@ public class File {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="name")
+	@Column(name="name", nullable=true)
 	private String name;
 	
 	@Enumerated(EnumType.STRING)
