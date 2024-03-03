@@ -20,6 +20,10 @@ public class HomeworkDTO {
 
 	private Long id;
 	
+	private Long classroomId;
+	
+	private Long teacherId;
+	
 	private String title;
 	
 	private String description;

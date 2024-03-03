@@ -3,6 +3,7 @@ package com.nkedu.back.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.nkedu.back.entity.HomeworkOfStudent.Status;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,8 +21,14 @@ public class HomeworkOfStudentDTO {
 	
 	private Long id;
 	
-	private List<FileDataDTO> files;
+	private Long homeworkId;
+	
+	private Long studentId;
+	
+	private Status status;
 	
 	private String feedback;
+	
+	private List<FileDataDTO> files;
 	
 }
