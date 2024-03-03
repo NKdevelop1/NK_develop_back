@@ -24,6 +24,6 @@ public interface FileDataService {
 	/**
 	 * 파일 다운로드를 진행하는 API 입니다. 
 	 */
-	public byte[] downloadFile(Long id);
+	public FileDataDTO downloadFile(Long id);
 	
 }

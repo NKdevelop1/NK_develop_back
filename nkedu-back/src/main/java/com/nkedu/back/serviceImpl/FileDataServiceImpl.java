@@ -16,6 +16,11 @@ import com.nkedu.back.repository.FileDataRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * @author devtae
+ * 파일 저장 및 다운로드에 대한 API 구현 코드입니다.
+ */
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -75,14 +80,18 @@ public class FileDataServiceImpl implements FileDataService {
 	}
 
 	@Override
-	public byte[] downloadFile(Long id) {
+	public FileDataDTO downloadFile(Long id) {
 		try {
 			FileData fileData = fileDataRepository.findById(id)
 												  .orElseThrow(RuntimeException::new);
 			
 			String path = fileData.getPath();
 			
-			return Files.readAllBytes(new File(path).toPath());
+			return FileDataDTO.builder()
+							  .type(fileData.getType())
+							  .bytes(Files.readAllBytes(new File(path).toPath()))
+							  .build();
+			
 		} catch (Exception e) {
 			log.error("Failed: " + e.getMessage(),e);
 		}

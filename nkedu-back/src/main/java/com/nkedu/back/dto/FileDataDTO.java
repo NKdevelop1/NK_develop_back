@@ -25,4 +25,6 @@ public class FileDataDTO {
 	
 	private String path;
 	
+	private byte[] bytes;
+	
 }

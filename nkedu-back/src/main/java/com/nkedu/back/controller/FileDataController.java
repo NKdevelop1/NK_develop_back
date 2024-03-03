@@ -2,6 +2,7 @@ package com.nkedu.back.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,11 @@ import com.nkedu.back.repository.HomeworkOfStudentRepository;
 import com.nkedu.back.repository.HomeworkRepository;
 
 import lombok.RequiredArgsConstructor;
+
+/**
+ * @author devtae
+ * File 다운로드 및 업로드 컨트롤러 코드입니다.
+ */
 
 @CrossOrigin
 @RequiredArgsConstructor
@@ -39,11 +45,14 @@ public class FileDataController {
 	}
 		
 	@GetMapping("/file/{id}")
-	public ResponseEntity<byte[]> downloadFile(@PathVariable("id") Long id) {
-		byte[] downloadFile = fileDataService.downloadFile(id);
+	public ResponseEntity<?> downloadFile(@PathVariable("id") Long id) {
+		FileDataDTO fileDataDTO = fileDataService.downloadFile(id);
 		
-		if (downloadFile != null) {
-			return new ResponseEntity<>(downloadFile, HttpStatus.OK);
+		if (fileDataDTO != null) {
+			return ResponseEntity.status(HttpStatus.OK)
+								 .contentType(MediaType.valueOf(fileDataDTO.getType().getMimeType()))
+								 .body(fileDataDTO.getBytes());
+			
 		} else {
 			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
