@@ -60,7 +60,7 @@ public class HomeworkOfStudent {
 			name="homework_of_student_of_file",
 			joinColumns= {@JoinColumn(name="homework_of_student_id", referencedColumnName="id")},
 			inverseJoinColumns= {@JoinColumn(name="file_id", referencedColumnName="id")})
-	private List<File> files;
+	private List<FileData> files;
 	
 	// 선생님 숙제 반려 시, feedback 작성 공간
 	@Column(name="feedback", nullable=true)

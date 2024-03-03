@@ -20,7 +20,7 @@ public class HomeworkOfStudentDTO {
 	
 	private Long id;
 	
-	private List<FileDTO> files;
+	private List<FileDataDTO> files;
 	
 	private String feedback;
 	

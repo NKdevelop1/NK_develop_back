@@ -14,7 +14,5 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api")
 @RestController
 public class HomeworkController {
-	private final HomeworkRepository homeworkRepository;
-	private final HomeworkOfStudentRepository homeworkOfStudentRepository;
 	
 }

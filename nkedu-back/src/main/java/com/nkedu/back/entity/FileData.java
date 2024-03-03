@@ -22,13 +22,13 @@ import lombok.experimental.SuperBuilder;
  */
 
 @Entity
-@Table(name="file")
+@Table(name="file_data")
 @Setter
 @Getter
 @SuperBuilder
 @RequiredArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class File {
+public class FileData {
 	
 	@Id
 	@Column(name="id")
@@ -67,6 +67,23 @@ public class File {
 		
 		public String getMimeType() {
 			return this.mimeType;
+		}
+		
+		public static FileType getFileType(String mimeType) {
+			switch(mimeType) {
+			
+			case "image/jpeg":
+				return FileType.IMAGE_JPEG;
+				
+			case "image/jpg":
+				return FileType.IMAGE_JPG;
+			
+			case "image/png":
+				return FileType.IMAGE_PNG;
+				
+			default:
+				return null;
+			}
 		}
 	}
 	

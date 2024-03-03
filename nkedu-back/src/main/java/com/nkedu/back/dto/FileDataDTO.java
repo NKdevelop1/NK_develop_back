@@ -1,7 +1,7 @@
 package com.nkedu.back.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nkedu.back.entity.File.FileType;
+import com.nkedu.back.entity.FileData.FileType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class FileDTO {
+public class FileDataDTO {
 
 	private Long id;
 	
