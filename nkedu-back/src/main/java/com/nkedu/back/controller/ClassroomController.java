@@ -1,6 +1,7 @@
 package com.nkedu.back.controller;
 
 import com.nkedu.back.api.ClassroomService;
+import com.nkedu.back.api.NoticeService;
 import com.nkedu.back.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ import java.util.List;
 public class ClassroomController {
 
     private final ClassroomService classroomService;
+    private final NoticeService noticeService;
+
 
     /**
      * 모든 수업을 조회하는 controller 입니다.
@@ -267,4 +270,43 @@ public class ClassroomController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
+    /** 수업 - 공지 관련 API 입니다. */
+
+    /**
+     * 특정 수업의 전체 공지를 조회하는 Controller입니다.
+     * @param classroom_id
+     * @return List<NoticeDTO>
+     * @author beom-i
+     */
+    @GetMapping("/classroom/{classroom_id}/notice")
+    public ResponseEntity<List<NoticeDTO>> getNoticesByClassroom(@PathVariable("classroom_id") Long classroom_id) {
+
+        List<NoticeDTO> noticeDTOs = noticeService.getNoticesByClassroomId(classroom_id);
+
+        if (noticeDTOs != null) {
+            return new ResponseEntity<>(noticeDTOs, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 특정 수업의 공지를 조회하는 Controller입니다.
+     * @param classroom_id notice_id
+     * @return List<NoticeDTO>
+     * @author beom-i
+     */
+    @GetMapping("/classroom/{classroom_id}/notice/{notice_id}")
+    public ResponseEntity<NoticeDTO> getNoticeByClassroom(@PathVariable("classroom_id") Long classroom_id,@PathVariable("notice_id") Long notice_id) {
+
+        NoticeDTO noticeDTO = noticeService.getNoticeByClassroomIdAndNoticeId(classroom_id,notice_id);
+
+        if (noticeDTO != null) {
+            return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

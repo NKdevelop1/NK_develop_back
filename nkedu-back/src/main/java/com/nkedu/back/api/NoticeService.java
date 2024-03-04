@@ -42,4 +42,21 @@ public interface NoticeService {
      * @author beom-i
      */
     public NoticeDTO getNoticeById(Long id);
+
+    /**
+     * 수업의 전체 공지 조회
+     * @param classroom_id
+     * @return NoticeDTO
+     * @author beom-i
+     */
+    public List<NoticeDTO> getNoticesByClassroomId(Long classroom_id);
+
+    /**
+     * 수업의 특정 공지 조회
+     * @param classroom_id notice_id
+     * @return NoticeDTO
+     * @author beom-i
+     */
+    public NoticeDTO getNoticeByClassroomIdAndNoticeId(Long classroom_id,Long notice_id);
+
 }

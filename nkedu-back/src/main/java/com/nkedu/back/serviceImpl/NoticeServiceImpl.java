@@ -151,4 +151,58 @@ public class NoticeServiceImpl implements NoticeService {
         return null;
     }
 
+    @Override
+    public List<NoticeDTO> getNoticesByClassroomId(Long id) {
+        try {
+            List<NoticeDTO> noticeDTOs = new ArrayList<>();
+
+            List<Notice> notices = noticeRepository.findAllByClassroomId(id).get();
+
+            for(Notice notice : notices) {
+                User user = userRepository.findOneByUsername(notice.getUser().getUsername()).get();
+
+                if(ObjectUtils.isEmpty(user)) {
+                    throw new RuntimeException("공지를 작성한 사용자가 존재하지 않습니다.");
+                }
+
+                NoticeDTO noticeDTO = NoticeDTO.builder()
+                        .id(notice.getId())
+                        .classroomDTO(ClassroomDTO.builder().id(notice.getClassroom().getId()).build())
+                        .userDTO(UserDTO.builder().username(user.getUsername()).nickname(user.getNickname()).build())
+                        .title(notice.getTitle())
+                        .content(notice.getContent())
+                        .noticeType(notice.getNoticeType())
+                        .build();
+                noticeDTOs.add(noticeDTO);
+            }
+            return noticeDTOs;
+        } catch(Exception e) {
+            log.info("[Failed] e : " + e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public NoticeDTO getNoticeByClassroomIdAndNoticeId(Long classroom_id,Long notice_id) {
+        try{
+            Notice notice = noticeRepository.findOneByClassroomIdAndNoticeId(classroom_id,notice_id).get();
+            User user = userRepository.findOneByUsername(notice.getUser().getUsername()).get();
+
+
+            NoticeDTO noticeDTO = NoticeDTO.builder()
+                    .id(notice.getId())
+                    .classroomDTO(ClassroomDTO.builder().id(notice.getClassroom().getId()).build())
+                    .userDTO(UserDTO.builder().username(user.getUsername()).nickname(user.getNickname()).build())
+                    .title(notice.getTitle())
+                    .content(notice.getContent())
+                    .noticeType(notice.getNoticeType())
+                    .build();
+
+            return noticeDTO;
+        } catch(Exception e){
+            log.info("Failed e : " + e.getMessage());
+        }
+        return null;
+    }
+
 }
