@@ -15,8 +15,8 @@ public class ClassNoticeDTO {
 
     private Long id;
 
-    @JsonProperty(value="user")
-    private UserDTO userDTO;
+    @JsonProperty(value="teacher")
+    private TeacherDTO teacherDTO;
 
     @JsonProperty(value="classroom")
     private ClassroomDTO classroomDTO;
