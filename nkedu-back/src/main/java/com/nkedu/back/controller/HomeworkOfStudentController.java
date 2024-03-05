@@ -2,6 +2,7 @@ package com.nkedu.back.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nkedu.back.api.HomeworkOfStudentService;
 import com.nkedu.back.dto.HomeworkOfStudentDTO;
+import com.nkedu.back.entity.HomeworkOfStudent.Status;
 
 import lombok.RequiredArgsConstructor;
 
@@ -44,8 +46,32 @@ public class HomeworkOfStudentController {
 																  @PathVariable("homework_id") Long homeworkId,
 																  @RequestParam(value="filter", required=false) String filterOption) {
 		// Get Parameter 에 따른 리스트 조회 기능 제공
+		Status filterStatus = null;
 		
-		return null;
+		switch(Status.valueOf(filterOption)) {
+		case TODO:
+			filterStatus = Status.TODO;
+			break;
+		case COMPLETE:
+			filterStatus = Status.COMPLETE;
+			break;
+		case REJECT:
+			filterStatus = Status.REJECT;
+			break;
+		case SUBMIT:
+			filterStatus = Status.REJECT;
+			break;
+		default:
+		}
+		
+		List<HomeworkOfStudentDTO> homeworkOfStudentDTOs = homeworkOfStudentService.getHomeworkOfStudents(filterStatus);
+		
+		if (homeworkOfStudentDTOs != null) {
+			return new ResponseEntity<>(homeworkOfStudentDTOs, HttpStatus.OK); 
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 	
 	/**
@@ -60,7 +86,14 @@ public class HomeworkOfStudentController {
 																  @PathVariable("homework_id") Long homeworkId,
 																  @PathVariable("submit_id") Long homeworkOfStudentId) {
 		
-		return null;
+		HomeworkOfStudentDTO homeworkOfStudentDTO = homeworkOfStudentService.getHomeworkOfStudent(homeworkOfStudentId);
+		
+		if (homeworkOfStudentDTO != null) {
+			return new ResponseEntity<>(homeworkOfStudentDTO, HttpStatus.OK); 
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 	
 	/**
@@ -74,7 +107,16 @@ public class HomeworkOfStudentController {
 	public ResponseEntity<HomeworkOfStudentDTO> createHomeworkOfStudent(@PathVariable("classroom_id") Long classroomId,
 																		@PathVariable("homework_id") Long homeworkId,
 																		@RequestBody HomeworkOfStudentDTO homeworkOfStudentDTO) {
-		return null;
+		
+		homeworkOfStudentDTO.setHomeworkId(homeworkId);
+		
+		HomeworkOfStudentDTO homeworkOfStudentDTO_ = homeworkOfStudentService.createHomeworkOfStudent(homeworkOfStudentDTO);
+		
+		if (homeworkOfStudentDTO_ != null) {
+			return new ResponseEntity<>(homeworkOfStudentDTO_, HttpStatus.OK); 
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	/**
@@ -90,7 +132,14 @@ public class HomeworkOfStudentController {
 																		@PathVariable("homework_id") Long homeworkId,
 																		@PathVariable("submit_id") Long homeworkOfStudentId,
 																		@RequestBody HomeworkOfStudentDTO homeworkOfStudentDTO) {
-		return null;
+
+		HomeworkOfStudentDTO homeworkOfStudentDTO_ = homeworkOfStudentService.createHomeworkOfStudent(homeworkOfStudentDTO);
+		
+		if (homeworkOfStudentDTO_ != null) {
+			return new ResponseEntity<>(homeworkOfStudentDTO_, HttpStatus.OK); 
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	/**
@@ -101,10 +150,17 @@ public class HomeworkOfStudentController {
 	 * @return
 	 */
 	@DeleteMapping("/classroom/{classroom_id}/homework/{homework_id}/submit/{submit_id}")
-	public ResponseEntity<HomeworkOfStudentDTO> updateHomeworkOfStudent(@PathVariable("classroom_id") Long classroomId,
-																		@PathVariable("homework_id") Long homeworkId,
-																		@PathVariable("submit_id") Long homeworkOfStudentId) {
-		return null;
+	public ResponseEntity<Boolean> deleteHomeworkOfStudent(@PathVariable("classroom_id") Long classroomId,
+															@PathVariable("homework_id") Long homeworkId,
+															@PathVariable("submit_id") Long homeworkOfStudentId) {
+
+		boolean result = homeworkOfStudentService.deleteHomeworkOfStudent(homeworkOfStudentId);
+		
+		if (result == true) {
+			return new ResponseEntity<>(result, HttpStatus.OK); 
+		} else {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 }

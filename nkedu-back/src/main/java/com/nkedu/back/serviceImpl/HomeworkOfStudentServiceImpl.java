@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.nkedu.back.api.HomeworkOfStudentService;
 import com.nkedu.back.dto.HomeworkOfStudentDTO;
+import com.nkedu.back.entity.HomeworkOfStudent.Status;
 import com.nkedu.back.repository.HomeworkOfStudentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,32 +20,67 @@ public class HomeworkOfStudentServiceImpl implements HomeworkOfStudentService {
 	private final HomeworkOfStudentRepository homeworkOfStudentRepository; 
 	
 	@Override
-	public HomeworkOfStudentDTO getHomeworkOfStudent(Long homeworkId) {
+	public HomeworkOfStudentDTO getHomeworkOfStudent(Long homeworkOfStudentId) {
+		
+		try {
+			
+		} catch (Exception e) {
+			log.error("Failed: " + e.getMessage(),e);
+		}
+		
 		return null;
+		
 	}
 
 	@Override
-	public List<HomeworkOfStudentDTO> getHomeworkOfStudents() {
+	public List<HomeworkOfStudentDTO> getHomeworkOfStudents(Status filterOption) {
+		
+		try {	
+			
+		} catch (Exception e) {
+			log.error("Failed: " + e.getMessage(),e);
+		}
+		
 		return null;
 	}
 
 	@Override
 	public HomeworkOfStudentDTO createHomeworkOfStudent(HomeworkOfStudentDTO homeworkOfStudentDTO) {
 		
-		// 신규 등록만 가능하도록 진행
+		try {
+			
+			// 신규 등록만 가능하도록 진행
+			
+		} catch (Exception e) {
+			log.error("Failed: " + e.getMessage(),e);
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public HomeworkOfStudentDTO updateHomeworkOfStudent(HomeworkOfStudentDTO homeworkOfStudentDTO) {
+		
+		try {
+			
+			
+		} catch (Exception e) {
+			log.error("Failed: " + e.getMessage(),e);
+		}
 		
 		return null;
 	}
 
 	@Override
-	public boolean deleteHomeworkOfStudent(Long homeworkId) {
+	public boolean deleteHomeworkOfStudent(Long homeworkOfStudentId) {
+		
+		try {
+			
+		} catch (Exception e) {
+			log.error("Failed: " + e.getMessage(),e);
+		}
+		
 		return false;
-	}
-
-	@Override
-	public HomeworkOfStudentDTO updateHomeworkOfStudent(Long homeworkId, HomeworkOfStudentDTO homeworkOfStudentDTO) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
