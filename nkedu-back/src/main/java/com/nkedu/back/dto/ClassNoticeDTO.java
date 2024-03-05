@@ -2,7 +2,7 @@ package com.nkedu.back.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nkedu.back.entity.Notice.NoticeType;
+import com.nkedu.back.entity.ClassNotice.ClassNoticeType;
 import lombok.*;
 
 @Getter
@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class NoticeDTO {
+public class ClassNoticeDTO {
 
     private Long id;
 
@@ -25,5 +25,5 @@ public class NoticeDTO {
 
     private String content;
 
-    private NoticeType noticeType;
+    private ClassNoticeType classNoticeType;
 }

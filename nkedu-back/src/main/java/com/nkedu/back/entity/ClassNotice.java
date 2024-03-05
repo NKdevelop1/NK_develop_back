@@ -12,14 +12,14 @@ import lombok.experimental.SuperBuilder;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="notice")
+@Table(name="class_otice")
 @Setter
 @Getter
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Notice {
+public class ClassNotice {
 
     @Id
     @Column(name="id")
@@ -46,8 +46,8 @@ public class Notice {
     private Timestamp created;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="notice_type",nullable = false)
-    private NoticeType noticeType;
+    @Column(name="classNotice_type",nullable = false)
+    private ClassNoticeType classNoticeType;
 
 
     /**
@@ -55,7 +55,7 @@ public class Notice {
      * 관리자 공지 선택지 - STUDENT PARENT STUDENT_PARENT
      *               - TEACHER STUDENT_TEACHER PARENT_TEACHER ENTIRE
      * */
-    public enum NoticeType {
+    public enum ClassNoticeType {
         STUDENT,
         PARENT,
         STUDENT_PARENT,

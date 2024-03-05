@@ -1,7 +1,7 @@
 package com.nkedu.back.controller;
 
 import com.nkedu.back.api.ClassroomService;
-import com.nkedu.back.api.NoticeService;
+import com.nkedu.back.api.ClassNoticeService;
 import com.nkedu.back.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.List;
 public class ClassroomController {
 
     private final ClassroomService classroomService;
-    private final NoticeService noticeService;
+    private final ClassNoticeService classNoticeService;
 
 
     /**
@@ -276,16 +276,16 @@ public class ClassroomController {
     /**
      * 특정 수업의 전체 공지를 조회하는 Controller입니다.
      * @param classroom_id
-     * @return List<NoticeDTO>
+     * @return List<ClassNoticeDTO>
      * @author beom-i
      */
-    @GetMapping("/classroom/{classroom_id}/notice")
-    public ResponseEntity<List<NoticeDTO>> getNoticesByClassroom(@PathVariable("classroom_id") Long classroom_id) {
+    @GetMapping("/classroom/{classroom_id}/class-notice")
+    public ResponseEntity<List<ClassNoticeDTO>> getClassNoticesByClassroom(@PathVariable("classroom_id") Long classroom_id) {
 
-        List<NoticeDTO> noticeDTOs = noticeService.getNoticesByClassroomId(classroom_id);
+        List<ClassNoticeDTO> classNoticeDTOs = classNoticeService.getClassNoticesByClassroomId(classroom_id);
 
-        if (noticeDTOs != null) {
-            return new ResponseEntity<>(noticeDTOs, HttpStatus.OK);
+        if (classNoticeDTOs != null) {
+            return new ResponseEntity<>(classNoticeDTOs, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
@@ -293,17 +293,17 @@ public class ClassroomController {
 
     /**
      * 특정 수업의 공지를 조회하는 Controller입니다.
-     * @param classroom_id notice_id
-     * @return List<NoticeDTO>
+     * @param classroom_id classNotice_id
+     * @return List<ClassNoticeDTO>
      * @author beom-i
      */
-    @GetMapping("/classroom/{classroom_id}/notice/{notice_id}")
-    public ResponseEntity<NoticeDTO> getNoticeByClassroom(@PathVariable("classroom_id") Long classroom_id,@PathVariable("notice_id") Long notice_id) {
+    @GetMapping("/classroom/{classroom_id}/class-notice/{classNotice_id}")
+    public ResponseEntity<ClassNoticeDTO> getClassNoticeByClassroom(@PathVariable("classroom_id") Long classroom_id,@PathVariable("classNotice_id") Long classNotice_id) {
 
-        NoticeDTO noticeDTO = noticeService.getNoticeByClassroomIdAndNoticeId(classroom_id,notice_id);
+        ClassNoticeDTO classNoticeDTO = classNoticeService.getClassNoticeByClassroomIdAndClassNoticeId(classroom_id,classNotice_id);
 
-        if (noticeDTO != null) {
-            return new ResponseEntity<>(noticeDTO, HttpStatus.OK);
+        if (classNoticeDTO != null) {
+            return new ResponseEntity<>(classNoticeDTO, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
