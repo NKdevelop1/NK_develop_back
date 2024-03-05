@@ -32,6 +32,7 @@ public interface AdminNoticeService {
 
     /**
      * 전체 수업 공지 조회 (adminNoticeType 으로 필터링 함)
+     * @param adminNoticeType
      * @return List<AdminNoticeDTO>
      * @author beom-i
      */

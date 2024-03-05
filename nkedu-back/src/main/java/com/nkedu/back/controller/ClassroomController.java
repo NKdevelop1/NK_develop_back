@@ -275,14 +275,14 @@ public class ClassroomController {
 
     /**
      * 전체 수업 공지를 조회하는 Controller입니다.
-     * @param classroom_id
+     * @param classroom_id type
      * @return List<ClassNoticeDTO>
      * @author beom-i
      */
     @GetMapping("/classroom/{classroom_id}/class-notice")
-    public ResponseEntity<List<ClassNoticeDTO>> getClassNoticesByClassroom(@PathVariable("classroom_id") Long classroom_id) {
+    public ResponseEntity<List<ClassNoticeDTO>> getClassNoticesByClassroom(@PathVariable("classroom_id") Long classroom_id,@RequestParam(value="type",required = false) String type) {
 
-        List<ClassNoticeDTO> classNoticeDTOs = classNoticeService.getClassNoticesByClassroomId(classroom_id);
+        List<ClassNoticeDTO> classNoticeDTOs = classNoticeService.getClassNoticesByClassroomId(classroom_id,type);
 
         if (classNoticeDTOs != null) {
             return new ResponseEntity<>(classNoticeDTOs, HttpStatus.OK);

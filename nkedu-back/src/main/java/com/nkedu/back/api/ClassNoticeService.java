@@ -31,11 +31,11 @@ public interface ClassNoticeService {
 
     /**
      * 전체 수업 공지 조회
-     * @param classroom_id
+     * @param classroom_id classNoticeType
      * @return List<ClassNoticeDTO>
      * @author beom-i
      */
-    public List<ClassNoticeDTO> getClassNoticesByClassroomId(Long classroom_id);
+    public List<ClassNoticeDTO> getClassNoticesByClassroomId(Long classroom_id,String classNoticeType);
 
     /**
      * 특정 수업 공지 조회

@@ -17,6 +17,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -99,11 +100,23 @@ public class ClassNoticeServiceImpl implements ClassNoticeService {
 
 
     @Override
-    public List<ClassNoticeDTO> getClassNoticesByClassroomId(Long id) {
+    public List<ClassNoticeDTO> getClassNoticesByClassroomId(Long id, String classNoticeType) {
         try {
             List<ClassNoticeDTO> classNoticeDTOs = new ArrayList<>();
 
-            List<ClassNotice> classNotices = classNoticeRepository.findAllByClassroomId(id).get();
+            List<ClassNotice> classNotices = null;
+
+            if(classNoticeType==null){
+                classNotices = classNoticeRepository.findAllByClassroomId(id).get();
+            }
+            else if(classNoticeType.equals("student")){
+                List<ClassNoticeType> types = Arrays.asList(ClassNoticeType.STUDENT, ClassNoticeType.ENTIRE);
+                classNotices = classNoticeRepository.findByClassroomIdAndClassNoticeTypes(id,types).get();
+            }
+            else if(classNoticeType.equals("parent")){
+                List<ClassNoticeType> types = Arrays.asList(ClassNoticeType.PARENT, ClassNoticeType.ENTIRE);
+                classNotices = classNoticeRepository.findByClassroomIdAndClassNoticeTypes(id,types).get();
+            }
 
             for(ClassNotice classNotice : classNotices) {
                 Teacher teacher = teacherRepository.findOneById(classNotice.getTeacher().getId()).get();

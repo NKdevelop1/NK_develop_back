@@ -51,19 +51,11 @@ public class ClassNotice {
 
 
     /**
-     * 선생님 공지 선택지 - STUDENT PARENT STUDENT_PARENT
-     * 관리자 공지 선택지 - STUDENT PARENT STUDENT_PARENT
-     *               - TEACHER STUDENT_TEACHER PARENT_TEACHER ENTIRE
+     * 선생님 공지 선택지 - STUDENT PARENT ENTIRE
      * */
     public enum ClassNoticeType {
         STUDENT,
         PARENT,
-        STUDENT_PARENT,
-
-
-        TEACHER,
-        STUDENT_TEACHER,
-        PARENT_TEACHER,
         ENTIRE
     }
 }
