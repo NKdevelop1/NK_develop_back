@@ -274,7 +274,7 @@ public class ClassroomController {
     /** 수업 - 공지 관련 API 입니다. */
 
     /**
-     * 특정 수업의 전체 공지를 조회하는 Controller입니다.
+     * 전체 수업 공지를 조회하는 Controller입니다.
      * @param classroom_id
      * @return List<ClassNoticeDTO>
      * @author beom-i
@@ -292,7 +292,7 @@ public class ClassroomController {
     }
 
     /**
-     * 특정 수업의 공지를 조회하는 Controller입니다.
+     * 특정 수업 공지를 조회하는 Controller입니다.
      * @param classroom_id classNotice_id
      * @return List<ClassNoticeDTO>
      * @author beom-i

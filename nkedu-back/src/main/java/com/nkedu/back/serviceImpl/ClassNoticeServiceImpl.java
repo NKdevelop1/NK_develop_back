@@ -28,7 +28,7 @@ public class ClassNoticeServiceImpl implements ClassNoticeService {
     private final ClassroomRepository classroomRepository;
 
     /**
-     * Classroom 엔티티의 CRUD 관련 API 구현 코드입니다.
+     * ClassNotice 엔티티의 CRUD 관련 API 구현 코드입니다.
      * @author beom-i
      */
 

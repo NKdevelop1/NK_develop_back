@@ -2,14 +2,12 @@ package com.nkedu.back.controller;
 
 import com.nkedu.back.api.ClassNoticeService;
 import com.nkedu.back.dto.ClassNoticeDTO;
-import com.nkedu.back.dto.ClassNoticeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @CrossOrigin
 @RequiredArgsConstructor
@@ -20,7 +18,7 @@ public class ClassNoticeController {
 
 
     /**
-     * 특정 공지를 생성하는 controller 입니다.
+     * 수업 공지를 생성하는 controller 입니다.
      * @param classNoticeDTO
      *
      * @author beom-i
@@ -39,7 +37,7 @@ public class ClassNoticeController {
     }
 
     /**
-     * 특정 id의 공지를 수정하는 controller 입니다.
+     * 특정 id의 수업 공지를 수정하는 controller 입니다.
      * (제목, 내용, 공지 공개 범위만 수정할 수 있습니다.)
      * @param id, classNoticeDTO
      * @author beom-i
@@ -57,7 +55,7 @@ public class ClassNoticeController {
     }
 
     /**
-     * 특정 공지를 삭제하는 controller 입니다.
+     * 특정 수업 공지를 삭제하는 controller 입니다.
      * @param id
      *
      * @author beom-i

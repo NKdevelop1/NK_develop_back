@@ -30,7 +30,7 @@ public interface ClassNoticeService {
 
 
     /**
-     * 특정 수업 공지 조회
+     * 전체 수업 공지 조회
      * @param classroom_id
      * @return List<ClassNoticeDTO>
      * @author beom-i
