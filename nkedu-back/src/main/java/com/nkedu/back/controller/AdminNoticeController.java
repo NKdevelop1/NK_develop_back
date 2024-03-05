@@ -2,6 +2,7 @@ package com.nkedu.back.controller;
 
 import com.nkedu.back.api.AdminNoticeService;
 import com.nkedu.back.dto.AdminNoticeDTO;
+import com.nkedu.back.entity.AdminNotice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,8 +80,9 @@ public class AdminNoticeController {
      * @author beom-i
      */
     @GetMapping("/admin-notice")
-    public ResponseEntity<List<AdminNoticeDTO>> getAdminNotices(){
-        List<AdminNoticeDTO> adminNoticeDTOs = adminNoticeService.getAdminNotices();
+    public ResponseEntity<List<AdminNoticeDTO>> getAdminNotices(@RequestParam(value="type",required = false) String type){
+
+        List<AdminNoticeDTO> adminNoticeDTOs = adminNoticeService.getAdminNotices(type);
 
         if (adminNoticeDTOs != null) {
             return new ResponseEntity<>(adminNoticeDTOs, HttpStatus.OK);

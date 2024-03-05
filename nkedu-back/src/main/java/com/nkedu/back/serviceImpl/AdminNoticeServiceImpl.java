@@ -15,6 +15,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -89,11 +90,31 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
     }
 
     @Override
-    public List<AdminNoticeDTO> getAdminNotices() {
+    public List<AdminNoticeDTO> getAdminNotices(String adminNoticeType) {
         try{
-            List<AdminNoticeDTO> adminNoticeDTOs = new ArrayList<>();
 
-            List<AdminNotice> adminNotices = adminNoticeRepository.findAll();
+            List<AdminNoticeDTO> adminNoticeDTOs = new ArrayList<>();
+            List<AdminNotice> adminNotices = null;
+
+            if(adminNoticeType == null) {
+                adminNotices = adminNoticeRepository.findAll();
+            }
+            else if( adminNoticeType.equals("student")){
+                List<AdminNoticeType> types = Arrays.asList(AdminNoticeType.STUDENT, AdminNoticeType.STUDENT_PARENT, AdminNoticeType.STUDENT_TEACHER,AdminNoticeType.ENTIRE);
+                adminNotices = adminNoticeRepository.findByAdminNoticeTypes(types).get();
+
+            }
+            else if(adminNoticeType.equals("parent")){
+                List<AdminNoticeType> types = Arrays.asList(AdminNoticeType.PARENT, AdminNoticeType.PARENT_TEACHER, AdminNoticeType.STUDENT_PARENT,AdminNoticeType.ENTIRE);
+                adminNotices = adminNoticeRepository.findByAdminNoticeTypes(types).get();
+            }
+            else if(adminNoticeType.equals("teacher")){
+                List<AdminNoticeType> types = Arrays.asList(AdminNoticeType.TEACHER, AdminNoticeType.STUDENT_TEACHER, AdminNoticeType.PARENT_TEACHER,AdminNoticeType.ENTIRE);
+                adminNotices = adminNoticeRepository.findByAdminNoticeTypes(types).get();
+            }
+            else if(adminNoticeType.equals("admin")){
+                adminNotices = adminNoticeRepository.findAll();
+            }
 
             for(AdminNotice adminNotice : adminNotices){
 
@@ -117,6 +138,8 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
         }
         return null;
     }
+
+
 
     @Override
     public AdminNoticeDTO getAdminNotice(Long adminNotice_id) {

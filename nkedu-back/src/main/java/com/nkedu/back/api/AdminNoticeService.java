@@ -31,11 +31,11 @@ public interface AdminNoticeService {
 
 
     /**
-     * 전체 수업 공지 조회
+     * 전체 수업 공지 조회 (adminNoticeType 으로 필터링 함)
      * @return List<AdminNoticeDTO>
      * @author beom-i
      */
-    public List<AdminNoticeDTO> getAdminNotices();
+    public List<AdminNoticeDTO> getAdminNotices(String adminNoticeType);
 
     /**
      * 특정 수업 공지 조회
