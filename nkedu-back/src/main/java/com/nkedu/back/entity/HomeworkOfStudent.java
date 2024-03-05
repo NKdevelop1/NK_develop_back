@@ -1,5 +1,6 @@
 package com.nkedu.back.entity;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -65,6 +66,12 @@ public class HomeworkOfStudent {
 	// 선생님 숙제 반려 시, feedback 작성 공간
 	@Column(name="feedback", nullable=true)
 	private String feedback;
+	
+	@Column(name="created")
+	private Timestamp created;
+	
+	@Column(name="updated")
+	private Timestamp updated;
 	
 	// 숙제 상태 enum 제공
 	public enum Status {

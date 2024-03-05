@@ -3,6 +3,8 @@ package com.nkedu.back.dto;
 import java.sql.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.nkedu.back.entity.HomeworkOfStudent.Status;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +24,13 @@ public class HomeworkDTO {
 	
 	private Long classroomId;
 	
+	@JsonProperty("classroom")
+	private ClassroomDTO classroomDTO;
+	
 	private Long teacherId;
+	
+	@JsonProperty("teacher")
+	private TeacherDTO teacherDTO;
 	
 	private String title;
 	
@@ -30,5 +38,10 @@ public class HomeworkDTO {
 	
 	private Timestamp created;
 	
+	private Timestamp updated;
+	
 	private Timestamp deadline;
+	
+	private Status status;
+	
 }

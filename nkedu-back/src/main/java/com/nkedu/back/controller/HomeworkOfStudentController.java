@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nkedu.back.api.HomeworkOfStudentService;
@@ -38,9 +39,10 @@ public class HomeworkOfStudentController {
 	 * @param homeworkId
 	 * @return
 	 */
-	@GetMapping("/api/classroom/{classroom_id}/homework/{homework_id}/submit")
+	@GetMapping("/classroom/{classroom_id}/homework/{homework_id}/submit")
 	public ResponseEntity<List<HomeworkOfStudentDTO>> getHomeworkOfStudent(@PathVariable("classroom_id") Long classroomId,
-																  @PathVariable("homework_id") Long homeworkId) {
+																  @PathVariable("homework_id") Long homeworkId,
+																  @RequestParam(value="filter", required=false) String filterOption) {
 		// Get Parameter 에 따른 리스트 조회 기능 제공
 		
 		return null;
@@ -53,7 +55,7 @@ public class HomeworkOfStudentController {
 	 * @param homeworkOfStudentId
 	 * @return
 	 */
-	@GetMapping("/api/classroom/{classroom_id}/homework/{homework_id}/submit/{submit_id}")
+	@GetMapping("/classroom/{classroom_id}/homework/{homework_id}/submit/{submit_id}")
 	public ResponseEntity<HomeworkOfStudentDTO> getHomeworkOfStudent(@PathVariable("classroom_id") Long classroomId,
 																  @PathVariable("homework_id") Long homeworkId,
 																  @PathVariable("submit_id") Long homeworkOfStudentId) {
@@ -68,7 +70,7 @@ public class HomeworkOfStudentController {
 	 * @param homeworkOfStudentDTO
 	 * @return
 	 */
-	@PostMapping("/api/classroom/{classroom_id}/homework/{homework_id}/submit")
+	@PostMapping("/classroom/{classroom_id}/homework/{homework_id}/submit")
 	public ResponseEntity<HomeworkOfStudentDTO> createHomeworkOfStudent(@PathVariable("classroom_id") Long classroomId,
 																		@PathVariable("homework_id") Long homeworkId,
 																		@RequestBody HomeworkOfStudentDTO homeworkOfStudentDTO) {
@@ -83,7 +85,7 @@ public class HomeworkOfStudentController {
 	 * @param homeworkOfStudentDTO
 	 * @return
 	 */
-	@PutMapping("/api/classroom/{classroom_id}/homework/{homework_id}/submit/{submit_id}")
+	@PutMapping("/classroom/{classroom_id}/homework/{homework_id}/submit/{submit_id}")
 	public ResponseEntity<HomeworkOfStudentDTO> updateHomeworkOfStudent(@PathVariable("classroom_id") Long classroomId,
 																		@PathVariable("homework_id") Long homeworkId,
 																		@PathVariable("submit_id") Long homeworkOfStudentId,
@@ -98,7 +100,7 @@ public class HomeworkOfStudentController {
 	 * @param homeworkOfStudentId
 	 * @return
 	 */
-	@DeleteMapping("/api/classroom/{classroom_id}/homework/{homework_id}/submit/{submit_id}")
+	@DeleteMapping("/classroom/{classroom_id}/homework/{homework_id}/submit/{submit_id}")
 	public ResponseEntity<HomeworkOfStudentDTO> updateHomeworkOfStudent(@PathVariable("classroom_id") Long classroomId,
 																		@PathVariable("homework_id") Long homeworkId,
 																		@PathVariable("submit_id") Long homeworkOfStudentId) {

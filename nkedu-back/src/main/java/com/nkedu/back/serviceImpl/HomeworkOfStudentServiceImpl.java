@@ -30,6 +30,9 @@ public class HomeworkOfStudentServiceImpl implements HomeworkOfStudentService {
 
 	@Override
 	public HomeworkOfStudentDTO createHomeworkOfStudent(HomeworkOfStudentDTO homeworkOfStudentDTO) {
+		
+		// 신규 등록만 가능하도록 진행
+		
 		return null;
 	}
 

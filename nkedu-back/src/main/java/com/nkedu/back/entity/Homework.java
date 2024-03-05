@@ -54,6 +54,9 @@ public class Homework {
 	@Column(name="created")
 	private Timestamp created;
 	
+	@Column(name="updated")
+	private Timestamp updated;
+	
 	@Column(name="deadline")
 	private Timestamp deadline;
 	

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nkedu.back.api.HomeworkService;
 import com.nkedu.back.dto.HomeworkDTO;
+import com.nkedu.back.dto.StudentDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,7 +42,12 @@ public class HomeworkController {
 	 */
 	@GetMapping("/classroom/{class_id}/homework")
 	public ResponseEntity<List<HomeworkDTO>> getHomeworks(@PathVariable("class_id") Long classId) {
-		List<HomeworkDTO> homeworkDTOs = homeworkService.getHomeworks(classId);
+		
+		// 유저에 따라 정보를 가져오도록 함.
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		
+		List<HomeworkDTO> homeworkDTOs = homeworkService.getHomeworks(classId, username); 
 		
 		if (homeworkDTOs != null) {
 			return new ResponseEntity<>(homeworkDTOs, HttpStatus.OK);
@@ -56,8 +64,12 @@ public class HomeworkController {
 	 */
 	@GetMapping("/classroom/{class_id}/homework/{homework_id}")
 	public ResponseEntity<HomeworkDTO> getHomework(@PathVariable("class_id") Long classId,
-										 @PathVariable("homework_id") Long homeworkId) {
-		HomeworkDTO homeworkDTO = homeworkService.getHomework(classId, homeworkId);
+										 		   @PathVariable("homework_id") Long homeworkId) {
+		// 유저에 따라 정보를 가져오도록 함.
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		
+		HomeworkDTO homeworkDTO = homeworkService.getHomework(classId, homeworkId, username); 
 		
 		if (homeworkDTO != null) {
 			return new ResponseEntity<>(homeworkDTO, HttpStatus.OK);

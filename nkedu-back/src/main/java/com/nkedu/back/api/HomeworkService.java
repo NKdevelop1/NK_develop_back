@@ -20,6 +20,14 @@ public interface HomeworkService {
 	public List<HomeworkDTO> getHomeworks(Long classId);
 	
 	/**
+	 * Homework 리스트 변환 (학생 숙제에 대한 status 포함)
+	 * @param classId
+	 * @param studentId
+	 * @return
+	 */
+	public List<HomeworkDTO> getHomeworks(Long classId, String username);
+	
+	/**
 	 * Homework 세부 조회 
 	 * @param class_id
 	 * @param homework_id
@@ -27,6 +35,15 @@ public interface HomeworkService {
 	 */
 	public HomeworkDTO getHomework(Long classId, Long homeworkId);
 
+	/**
+	 * Homework 세부 조회 (학생 숙제에 대한 status 포함)
+	 * @param classID
+	 * @param homeworkId
+	 * @param studentId
+	 * @return
+	 */
+	public HomeworkDTO getHomework(Long classID, Long homeworkId, String username);
+	
 	/**
 	 * Homework 삽입
 	 * @param homeworkDTO
