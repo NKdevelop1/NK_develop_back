@@ -118,7 +118,7 @@ public class ClassNoticeServiceImpl implements ClassNoticeService {
             for (GrantedAuthority authority : authorities) {
                 String authorityName = authority.getAuthority();
 
-                if (authorityName.equals("ROLE_ADMIN")) {
+                if (authorityName.equals("ROLE_ADMIN") || authorityName.equals("ROLE_TEACHER")) {
                     classNotices = classNoticeRepository.findAllByClassroomId(id).get();
                 }
                 else if (authorityName.equals("ROLE_STUDENT")) {
