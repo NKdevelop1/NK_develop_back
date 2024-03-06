@@ -31,12 +31,11 @@ public interface AdminNoticeService {
 
 
     /**
-     * 전체 수업 공지 조회 (adminNoticeType 으로 필터링 함)
-     * @param adminNoticeType
+     * 전체 수업 공지 조회 (토큰의 username 받아서 serviceimpl에서 필터링처리해줌)
      * @return List<AdminNoticeDTO>
      * @author beom-i
      */
-    public List<AdminNoticeDTO> getAdminNotices(String adminNoticeType);
+    public List<AdminNoticeDTO> getAdminNotices();
 
     /**
      * 특정 수업 공지 조회

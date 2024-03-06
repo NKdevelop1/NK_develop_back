@@ -80,9 +80,9 @@ public class AdminNoticeController {
      * @author beom-i
      */
     @GetMapping("/admin-notice")
-    public ResponseEntity<List<AdminNoticeDTO>> getAdminNotices(@RequestParam(value="type",required = false) String type){
+    public ResponseEntity<List<AdminNoticeDTO>> getAdminNotices(){
 
-        List<AdminNoticeDTO> adminNoticeDTOs = adminNoticeService.getAdminNotices(type);
+        List<AdminNoticeDTO> adminNoticeDTOs = adminNoticeService.getAdminNotices();
 
         if (adminNoticeDTOs != null) {
             return new ResponseEntity<>(adminNoticeDTOs, HttpStatus.OK);

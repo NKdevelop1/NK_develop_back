@@ -10,12 +10,16 @@ import com.nkedu.back.repository.AdminNoticeRepository;
 import com.nkedu.back.repository.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -90,30 +94,34 @@ public class AdminNoticeServiceImpl implements AdminNoticeService {
     }
 
     @Override
-    public List<AdminNoticeDTO> getAdminNotices(String adminNoticeType) {
+    public List<AdminNoticeDTO> getAdminNotices() {
         try{
 
             List<AdminNoticeDTO> adminNoticeDTOs = new ArrayList<>();
             List<AdminNotice> adminNotices = null;
 
-            if(adminNoticeType == null) {
-                adminNotices = adminNoticeRepository.findAll();
-            }
-            else if( adminNoticeType.equals("student")){
-                List<AdminNoticeType> types = Arrays.asList(AdminNoticeType.STUDENT, AdminNoticeType.STUDENT_PARENT, AdminNoticeType.STUDENT_TEACHER,AdminNoticeType.ENTIRE);
-                adminNotices = adminNoticeRepository.findByAdminNoticeTypes(types).get();
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-            }
-            else if(adminNoticeType.equals("parent")){
-                List<AdminNoticeType> types = Arrays.asList(AdminNoticeType.PARENT, AdminNoticeType.PARENT_TEACHER, AdminNoticeType.STUDENT_PARENT,AdminNoticeType.ENTIRE);
-                adminNotices = adminNoticeRepository.findByAdminNoticeTypes(types).get();
-            }
-            else if(adminNoticeType.equals("teacher")){
-                List<AdminNoticeType> types = Arrays.asList(AdminNoticeType.TEACHER, AdminNoticeType.STUDENT_TEACHER, AdminNoticeType.PARENT_TEACHER,AdminNoticeType.ENTIRE);
-                adminNotices = adminNoticeRepository.findByAdminNoticeTypes(types).get();
-            }
-            else if(adminNoticeType.equals("admin")){
-                adminNotices = adminNoticeRepository.findAll();
+            for (GrantedAuthority authority : authorities) {
+                String authorityName = authority.getAuthority();
+
+                // ROLE 에 따른 로직
+                if (authorityName.equals("ROLE_ADMIN")) {
+                    adminNotices = adminNoticeRepository.findAll();
+                }
+                else if (authorityName.equals("ROLE_STUDENT")) {
+                    List<AdminNoticeType> types = Arrays.asList(AdminNoticeType.STUDENT, AdminNoticeType.STUDENT_PARENT, AdminNoticeType.STUDENT_TEACHER,AdminNoticeType.ENTIRE);
+                    adminNotices = adminNoticeRepository.findByAdminNoticeTypes(types).get();
+                }
+                else if (authorityName.equals("ROLE_TEACHER")) {
+                    List<AdminNoticeType> types = Arrays.asList(AdminNoticeType.TEACHER, AdminNoticeType.STUDENT_TEACHER, AdminNoticeType.PARENT_TEACHER,AdminNoticeType.ENTIRE);
+                    adminNotices = adminNoticeRepository.findByAdminNoticeTypes(types).get();
+                }
+                else if (authorityName.equals("ROLE_PARENT")) {
+                    List<AdminNoticeType> types = Arrays.asList(AdminNoticeType.PARENT, AdminNoticeType.PARENT_TEACHER, AdminNoticeType.STUDENT_PARENT,AdminNoticeType.ENTIRE);
+                    adminNotices = adminNoticeRepository.findByAdminNoticeTypes(types).get();
+                }
             }
 
             for(AdminNotice adminNotice : adminNotices){
