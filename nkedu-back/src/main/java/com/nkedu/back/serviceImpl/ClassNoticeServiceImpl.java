@@ -4,6 +4,7 @@ import com.nkedu.back.api.ClassNoticeService;
 import com.nkedu.back.dto.ClassroomDTO;
 import com.nkedu.back.dto.ClassNoticeDTO;
 import com.nkedu.back.dto.TeacherDTO;
+import com.nkedu.back.entity.AdminNotice;
 import com.nkedu.back.entity.ClassNotice;
 import com.nkedu.back.entity.ClassNotice.ClassNoticeType;
 import com.nkedu.back.entity.Teacher;
@@ -12,12 +13,16 @@ import com.nkedu.back.repository.ClassNoticeRepository;
 import com.nkedu.back.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -100,22 +105,30 @@ public class ClassNoticeServiceImpl implements ClassNoticeService {
 
 
     @Override
-    public List<ClassNoticeDTO> getClassNoticesByClassroomId(Long id, String classNoticeType) {
+    public List<ClassNoticeDTO> getClassNoticesByClassroomId(Long id) {
         try {
             List<ClassNoticeDTO> classNoticeDTOs = new ArrayList<>();
 
             List<ClassNotice> classNotices = null;
 
-            if(classNoticeType==null){
-                classNotices = classNoticeRepository.findAllByClassroomId(id).get();
-            }
-            else if(classNoticeType.equals("student")){
-                List<ClassNoticeType> types = Arrays.asList(ClassNoticeType.STUDENT, ClassNoticeType.ENTIRE);
-                classNotices = classNoticeRepository.findByClassroomIdAndClassNoticeTypes(id,types).get();
-            }
-            else if(classNoticeType.equals("parent")){
-                List<ClassNoticeType> types = Arrays.asList(ClassNoticeType.PARENT, ClassNoticeType.ENTIRE);
-                classNotices = classNoticeRepository.findByClassroomIdAndClassNoticeTypes(id,types).get();
+            // 토큰에서 ROLE을 가져와서 ROLE에 따라 공지 타입 필터링 조회
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+            for (GrantedAuthority authority : authorities) {
+                String authorityName = authority.getAuthority();
+
+                if (authorityName.equals("ROLE_ADMIN")) {
+                    classNotices = classNoticeRepository.findAllByClassroomId(id).get();
+                }
+                else if (authorityName.equals("ROLE_STUDENT")) {
+                    List<ClassNoticeType> types = Arrays.asList(ClassNoticeType.STUDENT, ClassNoticeType.ENTIRE);
+                    classNotices = classNoticeRepository.findByClassroomIdAndClassNoticeTypes(id,types).get();
+                }
+                else if (authorityName.equals("ROLE_PARENT")) {
+                    List<ClassNoticeType> types = Arrays.asList(ClassNoticeType.PARENT, ClassNoticeType.ENTIRE);
+                    classNotices = classNoticeRepository.findByClassroomIdAndClassNoticeTypes(id,types).get();
+                }
             }
 
             for(ClassNotice classNotice : classNotices) {

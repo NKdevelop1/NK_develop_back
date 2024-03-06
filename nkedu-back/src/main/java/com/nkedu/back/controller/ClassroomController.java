@@ -280,9 +280,9 @@ public class ClassroomController {
      * @author beom-i
      */
     @GetMapping("/classroom/{classroom_id}/class-notice")
-    public ResponseEntity<List<ClassNoticeDTO>> getClassNoticesByClassroom(@PathVariable("classroom_id") Long classroom_id,@RequestParam(value="type",required = false) String type) {
+    public ResponseEntity<List<ClassNoticeDTO>> getClassNoticesByClassroom(@PathVariable("classroom_id") Long classroom_id) {
 
-        List<ClassNoticeDTO> classNoticeDTOs = classNoticeService.getClassNoticesByClassroomId(classroom_id,type);
+        List<ClassNoticeDTO> classNoticeDTOs = classNoticeService.getClassNoticesByClassroomId(classroom_id);
 
         if (classNoticeDTOs != null) {
             return new ResponseEntity<>(classNoticeDTOs, HttpStatus.OK);
