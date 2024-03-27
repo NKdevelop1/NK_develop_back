@@ -1,10 +1,8 @@
 package com.nkedu.back.api;
 
 import com.nkedu.back.dto.ClassroomDTO;
-import com.nkedu.back.dto.ParentOfStudentDTO;
 import com.nkedu.back.dto.StudentOfClassroomDTO;
 import com.nkedu.back.dto.TeacherOfClassroomDTO;
-import com.nkedu.back.entity.Teacher;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
 package com.nkedu.back.controller;
 
 import com.nkedu.back.api.ClassroomService;
+import com.nkedu.back.api.ClassNoticeService;
 import com.nkedu.back.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ import java.util.List;
 public class ClassroomController {
 
     private final ClassroomService classroomService;
+    private final ClassNoticeService classNoticeService;
+
 
     /**
      * 모든 수업을 조회하는 controller 입니다.
@@ -267,4 +270,43 @@ public class ClassroomController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
+
+    /** 수업 - 공지 관련 API 입니다. */
+
+    /**
+     * 전체 수업 공지를 조회하는 Controller입니다.
+     * @param classroom_id type
+     * @return List<ClassNoticeDTO>
+     * @author beom-i
+     */
+    @GetMapping("/classroom/{classroom_id}/class-notice")
+    public ResponseEntity<List<ClassNoticeDTO>> getClassNoticesByClassroom(@PathVariable("classroom_id") Long classroom_id) {
+
+        List<ClassNoticeDTO> classNoticeDTOs = classNoticeService.getClassNoticesByClassroomId(classroom_id);
+
+        if (classNoticeDTOs != null) {
+            return new ResponseEntity<>(classNoticeDTOs, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /**
+     * 특정 수업 공지를 조회하는 Controller입니다.
+     * @param classroom_id classNotice_id
+     * @return List<ClassNoticeDTO>
+     * @author beom-i
+     */
+    @GetMapping("/classroom/{classroom_id}/class-notice/{classNotice_id}")
+    public ResponseEntity<ClassNoticeDTO> getClassNoticeByClassroom(@PathVariable("classroom_id") Long classroom_id,@PathVariable("classNotice_id") Long classNotice_id) {
+
+        ClassNoticeDTO classNoticeDTO = classNoticeService.getClassNoticeByClassroomIdAndClassNoticeId(classroom_id,classNotice_id);
+
+        if (classNoticeDTO != null) {
+            return new ResponseEntity<>(classNoticeDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
