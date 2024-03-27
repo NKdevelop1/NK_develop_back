@@ -18,6 +18,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * @author devtae
+ * 학생에 대한 부모 관계 정의를 위한 Entity 코드입니다.
+ */
+
 @Entity
 @Table(name="parent_of_student")
 @Setter
